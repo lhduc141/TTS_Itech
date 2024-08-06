@@ -1,34 +1,54 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+// App.jsx
+import { useState, useEffect } from 'react';
+import {
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
+
+import './css/style.css';
+
+// Import pages
+import Dashboard from './pages/Dashboard';
+import Contact from './pages/Contact';
+import AboutUsPage from './pages/Aboutus';
+import Layout from './components/layout/Layout';
+import Customers from './pages/Customers';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    document.querySelector('html').style.scrollBehavior = 'auto'
+    window.scroll({ top: 0 })
+    document.querySelector('html').style.scrollBehavior = ''
+  }, [location.pathname]); // triggered on route change
 
   return (
     <>
-      <div className="text-3xl">Check</div>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route path="/" element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+            <Dashboard />
+          </Layout>
+        } />
+        <Route path="/Contact" element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+            <Contact />
+          </Layout>
+        } />
+        <Route path="/Aboutus" element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+            <AboutUsPage />
+          </Layout>
+        } />
+        <Route path="/Customers" element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+            <Customers />
+          </Layout>
+        } />
+      </Routes>
     </>
   );
 }
