@@ -1,34 +1,31 @@
-import _sequelize from 'sequelize';
-const { Model, Sequelize } = _sequelize;
-
-export default class postDetail extends Model {
-  static init(sequelize, DataTypes) {
-  return super.init({
-    pDetail_id: {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('fieldPost', {
+    fPost_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    pDetail_title: {
+    fPost_title: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    pDetail_content: {
+    fPost_content: {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    post_id: {
+    field_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'post',
-        key: 'post_id'
+        model: 'fields',
+        key: 'field_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'postDetail',
+    tableName: 'fieldPost',
     timestamps: false,
     indexes: [
       {
@@ -36,17 +33,16 @@ export default class postDetail extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "pDetail_id" },
+          { name: "fPost_id" },
         ]
       },
       {
-        name: "post_id",
+        name: "field_id",
         using: "BTREE",
         fields: [
-          { name: "post_id" },
+          { name: "field_id" },
         ]
       },
     ]
   });
-  }
-}
+};

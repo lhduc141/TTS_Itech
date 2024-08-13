@@ -1,17 +1,38 @@
-import _sequelize from 'sequelize';
-const { Model, Sequelize } = _sequelize;
-
-export default class fields extends Model {
-  static init(sequelize, DataTypes) {
-  return super.init({
-    field_id: {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('information', {
+    cpn_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    field_name: {
+    cpn_name: {
       type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_sname: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_address: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_title: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_desc: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    cpn_copyright: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_content: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
     admin_id: {
@@ -32,7 +53,7 @@ export default class fields extends Model {
     }
   }, {
     sequelize,
-    tableName: 'fields',
+    tableName: 'information',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -41,7 +62,7 @@ export default class fields extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "field_id" },
+          { name: "cpn_id" },
         ]
       },
       {
@@ -60,5 +81,4 @@ export default class fields extends Model {
       },
     ]
   });
-  }
-}
+};

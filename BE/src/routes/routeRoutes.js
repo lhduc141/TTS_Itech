@@ -10,5 +10,4 @@ routeRoutes.use("/admin", adminRoutes);
 routeRoutes.use("/user", userRoutes);
 routeRoutes.use("/auth", authRoutes)
 
-
 export default routeRoutes;

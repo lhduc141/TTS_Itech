@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    getAdminDetails,
     postAboutUs,
     postCarousel,
     postContact, postCustomers,
@@ -21,7 +22,7 @@ import {
 
 const adminRoutes = express.Router();
 
-adminRoutes.put("/change-detail-information", putDetailInformation);
+adminRoutes.put("/change-detail-information/:cpn_id", putDetailInformation);
 
 adminRoutes.put("/edit-carousel/:crs_id", putCarousel);
 adminRoutes.post("/add-carousel", postCarousel);
@@ -52,5 +53,7 @@ adminRoutes.post("/add-projects", postProjects);
 
 adminRoutes.put("/customers/:customer_id", putCustomers);
 adminRoutes.post("/add-customers", postCustomers);
+
+adminRoutes.get("/detail/:id", getAdminDetails)
 
 export default adminRoutes;

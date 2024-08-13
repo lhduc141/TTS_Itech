@@ -1,43 +1,42 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class admin extends Model {
+export default class Language extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    admin_id: {
+    lang_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    username: {
+    lang_name: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    password: {
-      type: DataTypes.STRING(255),
+    create_at: {
+      type: DataTypes.DATE,
       allowNull: false
     },
-    token: {
-      type: DataTypes.TEXT,
+    update_at: {
+      type: DataTypes.DATE,
       allowNull: false
     },
-    reftoken: {
-      type: DataTypes.TEXT,
+    delete_at: {
+      type: DataTypes.DATE,
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'admin',
-    timestamps: true,
-    paranoid: true,
+    tableName: 'Language',
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "admin_id" },
+          { name: "lang_id" },
         ]
       },
     ]

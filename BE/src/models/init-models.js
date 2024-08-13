@@ -1,69 +1,69 @@
 import _sequelize from "sequelize";
 const DataTypes = _sequelize.DataTypes;
-import _admin from  "./admin.js";
-import _feedback from  "./feedback.js";
-import _fieldPost from  "./fieldPost.js";
-import _fields from  "./fields.js";
-import _image from  "./image.js";
-import _information from  "./information.js";
-import _language from  "./language.js";
-import _post from  "./post.js";
-import _postDetail from  "./postDetail.js";
-import _teams from  "./teams.js";
+import _Admin from  "./Admin.js";
+import _Feedback from  "./Feedback.js";
+import _FieldPost from  "./FieldPost.js";
+import _Fields from  "./Fields.js";
+import _Image from  "./Image.js";
+import _Information from  "./Information.js";
+import _Language from  "./Language.js";
+import _Post from  "./Post.js";
+import _PostDetail from  "./PostDetail.js";
+import _Teams from  "./Teams.js";
 
 export default function initModels(sequelize) {
-  const admin = _admin.init(sequelize, DataTypes);
-  const feedback = _feedback.init(sequelize, DataTypes);
-  const fieldPost = _fieldPost.init(sequelize, DataTypes);
-  const fields = _fields.init(sequelize, DataTypes);
-  const image = _image.init(sequelize, DataTypes);
-  const information = _information.init(sequelize, DataTypes);
-  const language = _language.init(sequelize, DataTypes);
-  const post = _post.init(sequelize, DataTypes);
-  const postDetail = _postDetail.init(sequelize, DataTypes);
-  const teams = _teams.init(sequelize, DataTypes);
+  const Admin = _Admin.init(sequelize, DataTypes);
+  const Feedback = _Feedback.init(sequelize, DataTypes);
+  const FieldPost = _FieldPost.init(sequelize, DataTypes);
+  const Fields = _Fields.init(sequelize, DataTypes);
+  const Image = _Image.init(sequelize, DataTypes);
+  const Information = _Information.init(sequelize, DataTypes);
+  const Language = _Language.init(sequelize, DataTypes);
+  const Post = _Post.init(sequelize, DataTypes);
+  const PostDetail = _PostDetail.init(sequelize, DataTypes);
+  const Teams = _Teams.init(sequelize, DataTypes);
 
-  feedback.belongsTo(admin, { as: "admin", foreignKey: "admin_id"});
-  admin.hasMany(feedback, { as: "feedbacks", foreignKey: "admin_id"});
-  fields.belongsTo(admin, { as: "admin", foreignKey: "admin_id"});
-  admin.hasMany(fields, { as: "fields", foreignKey: "admin_id"});
-  image.belongsTo(admin, { as: "admin", foreignKey: "admin_id"});
-  admin.hasMany(image, { as: "images", foreignKey: "admin_id"});
-  information.belongsTo(admin, { as: "admin", foreignKey: "admin_id"});
-  admin.hasMany(information, { as: "informations", foreignKey: "admin_id"});
-  post.belongsTo(admin, { as: "admin", foreignKey: "admin_id"});
-  admin.hasMany(post, { as: "posts", foreignKey: "admin_id"});
-  teams.belongsTo(admin, { as: "admin", foreignKey: "admin_id"});
-  admin.hasMany(teams, { as: "teams", foreignKey: "admin_id"});
-  fieldPost.belongsTo(fields, { as: "field", foreignKey: "field_id"});
-  fields.hasMany(fieldPost, { as: "fieldPosts", foreignKey: "field_id"});
-  post.belongsTo(fields, { as: "field", foreignKey: "field_id"});
-  fields.hasMany(post, { as: "posts", foreignKey: "field_id"});
-  feedback.belongsTo(language, { as: "lang", foreignKey: "lang_id"});
-  language.hasMany(feedback, { as: "feedbacks", foreignKey: "lang_id"});
-  fields.belongsTo(language, { as: "lang", foreignKey: "lang_id"});
-  language.hasMany(fields, { as: "fields", foreignKey: "lang_id"});
-  image.belongsTo(language, { as: "lang", foreignKey: "lang_id"});
-  language.hasMany(image, { as: "images", foreignKey: "lang_id"});
-  information.belongsTo(language, { as: "lang", foreignKey: "lang_id"});
-  language.hasMany(information, { as: "informations", foreignKey: "lang_id"});
-  post.belongsTo(language, { as: "lang", foreignKey: "lang_id"});
-  language.hasMany(post, { as: "posts", foreignKey: "lang_id"});
-  teams.belongsTo(language, { as: "lang", foreignKey: "lang_id"});
-  language.hasMany(teams, { as: "teams", foreignKey: "lang_id"});
-  postDetail.belongsTo(post, { as: "post", foreignKey: "post_id"});
-  post.hasMany(postDetail, { as: "postDetails", foreignKey: "post_id"});
+  Feedback.belongsTo(Admin, { as: "admin", foreignKey: "admin_id"});
+  Admin.hasMany(Feedback, { as: "Feedbacks", foreignKey: "admin_id"});
+  Fields.belongsTo(Admin, { as: "admin", foreignKey: "admin_id"});
+  Admin.hasMany(Fields, { as: "Fields", foreignKey: "admin_id"});
+  Image.belongsTo(Admin, { as: "admin", foreignKey: "admin_id"});
+  Admin.hasMany(Image, { as: "Images", foreignKey: "admin_id"});
+  Information.belongsTo(Admin, { as: "admin", foreignKey: "admin_id"});
+  Admin.hasMany(Information, { as: "Informations", foreignKey: "admin_id"});
+  Post.belongsTo(Admin, { as: "admin", foreignKey: "admin_id"});
+  Admin.hasMany(Post, { as: "Posts", foreignKey: "admin_id"});
+  Teams.belongsTo(Admin, { as: "admin", foreignKey: "admin_id"});
+  Admin.hasMany(Teams, { as: "Teams", foreignKey: "admin_id"});
+  FieldPost.belongsTo(Fields, { as: "field", foreignKey: "field_id"});
+  Fields.hasMany(FieldPost, { as: "FieldPosts", foreignKey: "field_id"});
+  Post.belongsTo(Fields, { as: "field", foreignKey: "field_id"});
+  Fields.hasMany(Post, { as: "Posts", foreignKey: "field_id"});
+  Feedback.belongsTo(Language, { as: "lang", foreignKey: "lang_id"});
+  Language.hasMany(Feedback, { as: "Feedbacks", foreignKey: "lang_id"});
+  Fields.belongsTo(Language, { as: "lang", foreignKey: "lang_id"});
+  Language.hasMany(Fields, { as: "Fields", foreignKey: "lang_id"});
+  Image.belongsTo(Language, { as: "lang", foreignKey: "lang_id"});
+  Language.hasMany(Image, { as: "Images", foreignKey: "lang_id"});
+  Information.belongsTo(Language, { as: "lang", foreignKey: "lang_id"});
+  Language.hasMany(Information, { as: "Informations", foreignKey: "lang_id"});
+  Post.belongsTo(Language, { as: "lang", foreignKey: "lang_id"});
+  Language.hasMany(Post, { as: "Posts", foreignKey: "lang_id"});
+  Teams.belongsTo(Language, { as: "lang", foreignKey: "lang_id"});
+  Language.hasMany(Teams, { as: "Teams", foreignKey: "lang_id"});
+  PostDetail.belongsTo(Post, { as: "post", foreignKey: "post_id"});
+  Post.hasMany(PostDetail, { as: "PostDetails", foreignKey: "post_id"});
 
   return {
-    admin,
-    feedback,
-    fieldPost,
-    fields,
-    image,
-    information,
-    language,
-    post,
-    postDetail,
-    teams,
+    Admin,
+    Feedback,
+    FieldPost,
+    Fields,
+    Image,
+    Information,
+    Language,
+    Post,
+    PostDetail,
+    Teams,
   };
 }

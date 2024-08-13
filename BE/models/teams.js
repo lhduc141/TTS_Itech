@@ -1,17 +1,22 @@
-import _sequelize from 'sequelize';
-const { Model, Sequelize } = _sequelize;
-
-export default class post extends Model {
-  static init(sequelize, DataTypes) {
-  return super.init({
-    post_id: {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('teams', {
+    mem_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    post_type: {
-      type: DataTypes.ENUM('aboutus','whyus'),
+    mem_img: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    mem_name: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    mem_pos: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
     admin_id: {
@@ -29,18 +34,10 @@ export default class post extends Model {
         model: 'language',
         key: 'lang_id'
       }
-    },
-    field_id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      references: {
-        model: 'fields',
-        key: 'field_id'
-      }
     }
   }, {
     sequelize,
-    tableName: 'post',
+    tableName: 'teams',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -49,7 +46,7 @@ export default class post extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "post_id" },
+          { name: "mem_id" },
         ]
       },
       {
@@ -66,14 +63,6 @@ export default class post extends Model {
           { name: "lang_id" },
         ]
       },
-      {
-        name: "field_id",
-        using: "BTREE",
-        fields: [
-          { name: "field_id" },
-        ]
-      },
     ]
   });
-  }
-}
+};

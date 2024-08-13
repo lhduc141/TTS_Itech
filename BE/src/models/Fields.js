@@ -1,32 +1,36 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class teams extends Model {
+export default class Fields extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    mem_id: {
+    field_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    mem_img: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    mem_name: {
+    field_name: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    mem_pos: {
-      type: DataTypes.TEXT,
+    create_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    update_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    delete_at: {
+      type: DataTypes.DATE,
       allowNull: false
     },
     admin_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'admin',
+        model: 'Admin',
         key: 'admin_id'
       }
     },
@@ -34,13 +38,13 @@ export default class teams extends Model {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'language',
+        model: 'Language',
         key: 'lang_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'teams',
+    tableName: 'Fields',
     timestamps: false,
     indexes: [
       {
@@ -48,7 +52,7 @@ export default class teams extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "mem_id" },
+          { name: "field_id" },
         ]
       },
       {

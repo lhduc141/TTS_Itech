@@ -1,32 +1,60 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class feedback extends Model {
+export default class Information extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    fb_id: {
+    cpn_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    fb_writer: {
+    cpn_name: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    fb_cpn: {
+    cpn_sname: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    fb_content: {
+    cpn_address: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_title: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_desc: {
       type: DataTypes.TEXT,
+      allowNull: false
+    },
+    cpn_copyright: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpn_content: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    create_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    update_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    delete_at: {
+      type: DataTypes.DATE,
       allowNull: false
     },
     admin_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'admin',
+        model: 'Admin',
         key: 'admin_id'
       }
     },
@@ -34,22 +62,21 @@ export default class feedback extends Model {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'language',
+        model: 'Language',
         key: 'lang_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'feedback',
-    timestamps: true,
-    paranoid: true,
+    tableName: 'Information',
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "fb_id" },
+          { name: "cpn_id" },
         ]
       },
       {

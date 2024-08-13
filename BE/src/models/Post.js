@@ -1,32 +1,36 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class image extends Model {
+export default class Post extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    img_id: {
+    post_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    img_name: {
-      type: DataTypes.STRING(255),
+    post_type: {
+      type: DataTypes.ENUM('aboutus','whyus'),
       allowNull: false
     },
-    img_type: {
-      type: DataTypes.STRING(255),
+    create_at: {
+      type: DataTypes.DATE,
       allowNull: false
     },
-    img_content: {
-      type: DataTypes.TEXT,
+    update_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    delete_at: {
+      type: DataTypes.DATE,
       allowNull: false
     },
     admin_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'admin',
+        model: 'Admin',
         key: 'admin_id'
       }
     },
@@ -34,22 +38,29 @@ export default class image extends Model {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'language',
+        model: 'Language',
         key: 'lang_id'
+      }
+    },
+    field_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: {
+        model: 'Fields',
+        key: 'field_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'image',
-    timestamps: true,
-    paranoid: true,
+    tableName: 'Post',
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "img_id" },
+          { name: "post_id" },
         ]
       },
       {
@@ -64,6 +75,13 @@ export default class image extends Model {
         using: "BTREE",
         fields: [
           { name: "lang_id" },
+        ]
+      },
+      {
+        name: "field_id",
+        using: "BTREE",
+        fields: [
+          { name: "field_id" },
         ]
       },
     ]

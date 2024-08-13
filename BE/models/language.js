@@ -1,9 +1,6 @@
-import _sequelize from 'sequelize';
-const { Model, Sequelize } = _sequelize;
-
-export default class language extends Model {
-  static init(sequelize, DataTypes) {
-  return super.init({
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('language', {
     lang_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
@@ -30,5 +27,4 @@ export default class language extends Model {
       },
     ]
   });
-  }
-}
+};

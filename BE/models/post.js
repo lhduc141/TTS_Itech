@@ -1,41 +1,14 @@
-import _sequelize from 'sequelize';
-const { Model, Sequelize } = _sequelize;
-
-export default class information extends Model {
-  static init(sequelize, DataTypes) {
-  return super.init({
-    cpn_id: {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('post', {
+    post_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    cpn_name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    cpn_sname: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    cpn_address: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    cpn_title: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    cpn_desc: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    cpn_copyright: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    cpn_content: {
-      type: DataTypes.TEXT,
+    post_type: {
+      type: DataTypes.ENUM('aboutus','whyus'),
       allowNull: false
     },
     admin_id: {
@@ -53,10 +26,18 @@ export default class information extends Model {
         model: 'language',
         key: 'lang_id'
       }
+    },
+    field_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: {
+        model: 'fields',
+        key: 'field_id'
+      }
     }
   }, {
     sequelize,
-    tableName: 'information',
+    tableName: 'post',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -65,7 +46,7 @@ export default class information extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "cpn_id" },
+          { name: "post_id" },
         ]
       },
       {
@@ -82,7 +63,13 @@ export default class information extends Model {
           { name: "lang_id" },
         ]
       },
+      {
+        name: "field_id",
+        using: "BTREE",
+        fields: [
+          { name: "field_id" },
+        ]
+      },
     ]
   });
-  }
-}
+};
