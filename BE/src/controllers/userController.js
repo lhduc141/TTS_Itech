@@ -44,7 +44,7 @@ export const getFieldsDetail = async (req, res) => {
     try {
         let { field_id } = req.params;
         let data = await model.FieldPost.findOne({
-            where: {field_id},
+            where: { field_id },
             attributes: [
                 ['fPost_id', 'fieldPostId'],
                 ['fPost_title', 'fieldPostTitle'],
@@ -52,16 +52,19 @@ export const getFieldsDetail = async (req, res) => {
                 ['create_at', 'createdAt'],
                 ['update_at', 'updatedAt']
             ]
-        })
+        });
+
         if (!data) {
-            responseData(res, "Fail", "No fields", 404);
+            return responseData(res, "Fail", "No fields", 404); // Add return here
         }
 
-        responseData(res, "Success", data, 200);
-    } catch {
-        responseData(res, "Error ...", "", 500);
+        return responseData(res, "Success", data, 200); // Add return here
+    } catch (error) {
+        console.error("Error:", error);
+        return responseData(res, "Error ...", "", 500); // Add return here
     }
 }
+
 
 export const getAboutUs = async (req, res) => {
     try {
@@ -156,7 +159,21 @@ export const getFeedback = async (req, res) => {
     }
 }
 
-export  const getCustomer = async (req, res) => {}
+export  const getCustomer = async (req, res) => {
+    try {
+        let data = await model.Image.findAll({
+            where: {img_type: 'customer'},
+            attributes: ['img_id', 'img_name', 'img_type', 'img_content']
+        })
+        if (!data) {
+            responseData(res, "Fail", "No customer image", 404);
+        }
+
+        responseData(res, "Success", data, 200);
+    } catch {
+        responseData(res, "Error ...", "", 500);
+    }
+}
 
 export const getDetailInformation = async (req, res) => {
     try {
@@ -190,6 +207,33 @@ export const getDetailInformation = async (req, res) => {
     }
 }
 
-export const getMembers = async (req, res) => {}
+export const getMembers = async (req, res) => {
+    try {
+        let { lang_id } = req.headers;
 
-export const getProjectsList = async (req, res) => {}
+        let data = await model.Teams.findAll({
+            where: { lang_id },
+            attributes: [
+                ['mem_id', 'id'],
+                ['mem_img', 'img'],
+                ['mem_name', 'name'],
+                ['mem_pos', 'position'],
+                ['create_at', 'createdAt'],
+                ['update_at', 'updatedAt']
+            ],
+        });
+
+        if (data.length === 0) {
+            return res.status(404).json({ message: "No posts found" });
+        }
+
+        res.status(200).json({ message: "Success", data });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ message: "An error occurred", error });
+    }
+}
+
+export const getProjectsList = async (req, res) => {
+
+}
