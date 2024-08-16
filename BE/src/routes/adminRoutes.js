@@ -22,9 +22,9 @@ import {
 
 const adminRoutes = express.Router();
 
-adminRoutes.put("/change-detail-information/:cpn_id", putDetailInformation);
+adminRoutes.put("/detail-information/:cpn_id", putDetailInformation);
 
-adminRoutes.put("/edit-carousel/:crs_id", putCarousel);
+adminRoutes.put("/carousel/:img_id", putCarousel);
 adminRoutes.post("/add-carousel", postCarousel);
 
 adminRoutes.put("/feedback/:fb_id", putFeedback);
@@ -42,10 +42,10 @@ adminRoutes.post("/add-members", postMember);
 adminRoutes.put("/contact/:contact_id", putContact);
 adminRoutes.post("/add-contact", postContact);
 
-adminRoutes.put("/fieldsList", putFieldsList);
+adminRoutes.put("/fieldsList/:field_id", putFieldsList);
 adminRoutes.post("/add-fieldsList", postFieldsList);
 
-adminRoutes.put("/field-detail/:field_id", putFieldDetail);
+adminRoutes.put("/field-detail/:fPost_id", putFieldDetail);
 adminRoutes.post("/add-field-detail/:field_id", postFieldDetail);
 
 adminRoutes.put("/projects/:projects_id", putProjects);
