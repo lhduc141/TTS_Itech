@@ -22,7 +22,7 @@ export const putDetailInformation = async (req, res) => {
         };
 
         if (!company) {
-            return responseData(res, "Fail", "Cannot find branch", 404);
+            return responseData(res, "Fail", "Cannot find Information to change", 404);
         }else {
             await company.update(data);
 
@@ -34,41 +34,28 @@ export const putDetailInformation = async (req, res) => {
     }
 };
 
-//
+// Carousel
 export const putCarousel = async (req, res) => {
-
-}
-
-export const postCarousel = async (req, res) => {
-
-}
-
-
-//Feedback table
-export const putFeedback = async (req, res) => {
-
-}
-
-export const postFeedback = async (req, res) => {
-
     try {
-        const { fb_id } = req.params;
+        const { img_id } = req.params;
         const {
-            fb_writer, fb_cpn, fb_content
+            img_name, img_content
         } = req.body;
-        const update_at = new Date();
+        const update_at = new Date(); // Generate the timestamp in the proper format
 
-        const company = await model.Information.findOne({
-            where: { fb_id , fb_writer, fb_cpn, fb_content},
+        // Find the company by cpn_id
+        const carousel = await model.Image.findOne({
+            where: { img_id, img_type: "carousel" },
         });
-        let newCompany = {
+        const data = {
+            img_name, img_content, update_at,
+        };
 
-        }
-        if (company) {
-            responseData(res, "Fail", "feedback is available", 200);
+        if (!carousel) {
+            return responseData(res, "Fail", "Cannot find Information to change", 404);
         }else {
+            await carousel.update(data);
 
-            await model.Information.create()
         }
 
         return responseData(res, "Success", data, 200);
@@ -77,47 +64,294 @@ export const postFeedback = async (req, res) => {
     }
 }
 
+export const postCarousel = async (req, res) => {
+
+}
+
+
+// Feedback
+export const putFeedback = async (req, res) => {
+
+    try {
+        const { fb_id } = req.params;
+        const {
+            fb_writer, fb_cpn, fb_content,
+        } = req.body;
+
+        const update_at = new Date(); // Generate the timestamp in the proper format
+        const data = {
+            fb_writer, fb_cpn, fb_content, update_at
+        };
+
+        const feedback = await model.Feedback.findOne({
+            where: { fb_id },
+        });
+
+        if (!feedback) {
+            return responseData(res, "Fail", "Cannot find Feedback Post", 404);
+        }else {
+            await feedback.update(data);
+        }
+
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
+
+export const postFeedback = async (req, res) => {
+    try {
+        const { fb_id } = req.params;
+        const {
+            fb_writer, fb_cpn, fb_content
+        } = req.body;
+        const update_at = new Date();
+
+        // Check if the feedback already exists
+        const existingFeedback = await model.Feedback.findOne({
+            where: { fb_id, fb_writer, fb_cpn, fb_content },
+        });
+
+        if (existingFeedback) {
+            return responseData(res, "Fail", "Feedback is already available", 200);
+        }
+
+        const newFeedback = await model.Feedback.create({
+            fb_id,
+            fb_writer,
+            fb_cpn,
+            fb_content,
+            update_at
+        });
+
+        return responseData(res, "Success", newFeedback, 201);
+    } catch (e) {
+        console.error("Error:", e.message);
+        return responseData(res, "Error", e.message, 500);
+    }
+}
+
+
+// Why Us Post
+export const putWhy = async (req, res) => {
+    try {
+        const { why_id } = req.params;
+        const {
+            pDetail_title, pDetail_content
+        } = req.body;
+
+        const update_at = new Date(); // Generate the timestamp in the proper format
+        const why = await model.PostDetail.findOne({
+            where: { pDetail_id: why_id },
+        });
+        const checkPostType = await model.Post.findOne({
+            where: {post_id: why_id, post_type: "whyus"}
+        })
+
+        let data = {
+            pDetail_id: why_id,
+            pDetail_title,
+            pDetail_content,
+            post_id: why.post_id,
+            update_at
+        }
+        if (!checkPostType) {
+            return responseData(res, "Fail", "Cannot find Why_Us Post", 404);
+        }else {
+            await why.update(data);
+        }
+
+
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
+
+export const postWhy = async (req, res) => {
+
+}
+
 
 //
-export const putWhy = async (req, res) => {}
+export const putAboutUs = async (req, res) => {
+    try {
+        const { aup_id } = req.params;
+        const {
+            pDetail_title, pDetail_content
+        } = req.body;
 
-export const postWhy = async (req, res) => {}
+        const update_at = new Date(); // Generate the timestamp in the proper format
+        const why = await model.PostDetail.findOne({
+            where: { pDetail_id: aup_id },
+        });
+        const checkPostType = await model.Post.findOne({
+            where: {post_id: aup_id, post_type: "aboutus"}
+        })
+
+        let data = {
+            pDetail_id: aup_id,
+            pDetail_title,
+            pDetail_content,
+            post_id: why.post_id,
+            update_at
+        }
+        if (!checkPostType) {
+            return responseData(res, "Fail", "Cannot find about us post", 404);
+        }else {
+            await why.update(data);
+        }
 
 
-//
-export const putAboutUs = async (req, res) => {}
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
+
+
 
 export const postAboutUs = async (req, res) => {}
 
 
-//
-export const putMember = async (req, res) => {}
+// Members
+export const putMember = async (req, res) => {
+    try {
+        const { mem_id } = req.params;
+        const {
+            mem_img, mem_name, mem_pos,
+        } = req.body;
+
+        const update_at = new Date();
+        const member = await model.Teams.findOne({
+            where: { mem_id },
+        });
+
+        let data = {
+            mem_img,
+            mem_name,
+            mem_pos,
+            update_at,
+        }
+        if (!member) {
+            return responseData(res, "Fail", "Cannot find Members Information", 404);
+        }else {
+            await member.update(data);
+        }
+
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
 
 export const postMember = async (req, res) => {}
 
 
-//
+// NOT have any API ?
 export const putContact = async (req, res) => {}
 
 export const postContact = async (req, res) => {}
 
 
-//
-export const putFieldsList = async (req, res) => {}
+// Edit FieldList
+export const putFieldsList = async (req, res) => {
+    try {
+        const { field_id } = req.params;
+        const {
+            field_name,
+        } = req.body;
+
+        const update_at = new Date();
+        const fields = await model.Fields.findOne({
+            where: { field_id },
+        });
+
+        let data = {
+            field_name,
+            update_at
+        }
+        if (!fields) {
+            return responseData(res, "Fail", "Cannot find Field Item", 404);
+        }else {
+            await fields.update(data);
+        }
+
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
 
 export const postFieldsList = async (req, res) => {}
 
 
-//
-export const putFieldDetail = async (req, res) => {}
+// Fields Detail
+export const putFieldDetail = async (req, res) => {
+    try {
+        const { fPost_id } = req.params;
+        const {
+            fPost_title, fPost_content,
+        } = req.body;
+
+        const update_at = new Date();
+        const fieldPost = await model.FieldPost.findOne({
+            where: { fPost_id },
+        });
+
+        let data = {
+            fPost_title, fPost_content,
+            update_at
+        }
+        if (!fieldPost) {
+            return responseData(res, "Fail", "Cannot find Field Item", 404);
+        }else {
+            await fieldPost.update(data);
+        }
+
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
 
 export const postFieldDetail = async (req, res) => {}
 
+
+// Projects
 export const putProjects = async (req, res) => {}
 
 export const postProjects = async (req, res) => {}
 
-export const putCustomers = async (req, res) => {}
+
+// Customer
+export const putCustomers = async (req, res) => {
+    try {
+        const { img_id } = req.params;
+        const {
+            img_name, img_content
+        } = req.body;
+        const update_at = new Date();
+
+        const customer = await model.Image.findOne({
+            where: { img_id, img_type: "customer" },
+        });
+        const data = {
+            img_name, img_content, update_at,
+        };
+
+        if (!customer) {
+            return responseData(res, "Fail", "Cannot find Information to change", 404);
+        }else {
+            await customer.update(data);
+
+        }
+
+        return responseData(res, "Success", data, 200);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
 
 export const postCustomers = async (req, res) => {}
 
@@ -129,8 +363,8 @@ export const getAdminDetails = async (req, res) => {
 
         })
 
-        responseData(res, "Success", data, 200);
+        return responseData(res, "Success", data, 200);
     } catch (e) {
-        responseData(res, "Error ...", e.message, 500);
+        return responseData(res, "Error ...", e.message, 500);
     }
 }
