@@ -65,7 +65,32 @@ export const putCarousel = async (req, res) => {
 }
 
 export const postCarousel = async (req, res) => {
+    try {
+        const {
+            img_name, img_content
+        } = req.body;
 
+        const create_at = new Date();
+
+        const check = await model.Image.findOne({
+            where: { img_type: "carousel", img_name, img_content },
+        });
+
+        if (check) {
+            return responseData(res, "Fail", "Carousel already exists in the table", 500)
+        }
+        
+        const data = await model.Image.create({
+            img_name,
+            img_type: "carousel",
+            img_content,
+            create_at
+        });
+
+        return responseData(res, "Success", data, 201);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500)
+    }
 }
 
 
@@ -169,7 +194,39 @@ export const putWhy = async (req, res) => {
 }
 
 export const postWhy = async (req, res) => {
+    try {
+        const { why_id } = req.params;
+        const {
+            pDetail_title, pDetail_content
+        } = req.body;
 
+        const create_at = new Date();
+
+        const checkPostType = await model.Post.findOne({
+            where: {post_id: why_id, post_type: "whyus"}
+        })
+
+        const checkPostDetail = await model.PostDetail.findOne({
+
+            where:{post_id: why_id, pDetail_title, pDetail_content}
+        })
+
+        if (!checkPostType) {
+            return responseData(res, "Fail", "Not is why us", 404);
+        } else if (checkPostDetail) {
+            return responseData(res, "Fail", "Post detail about us already exists in the table", 200);
+        }
+        const newPostWhy = await model.PostDetail.create({
+            pDetail_title,
+            pDetail_content,
+            post_id: why_id,
+            create_at
+        });
+
+        return responseData(res, "Success", newPostWhy, 201);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
 }
 
 
@@ -211,7 +268,38 @@ export const putAboutUs = async (req, res) => {
 
 
 
-export const postAboutUs = async (req, res) => {}
+export const postAboutUs = async (req, res) => {
+    try {
+        const { aup_id } = req.params;
+        const {
+            pDetail_title, pDetail_content
+        } = req.body;
+        const create_at = new Date();
+        const checkPostType = await model.Post.findOne({
+            where: {post_id: aup_id, post_type: "aboutus"}
+        })
+        const checkPostDetail = await model.PostDetail.findOne({
+
+            where:{post_id: aup_id, pDetail_title, pDetail_content}
+        })
+
+        if (!checkPostType) {
+            return responseData(res, "Fail", "Not is about us", 404);
+        } else if (checkPostDetail) {
+            return responseData(res, "Fail", "Post detail about us already exists in the table", 200);
+        }
+        const newPostAbout = await model.PostDetail.create({
+            pDetail_content,
+            pDetail_title,
+            post_id: aup_id,
+            create_at,
+        });
+
+        return responseData(res, "Success", newPostAbout, 201);
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500);
+    }
+}
 
 
 // Members
@@ -245,7 +333,34 @@ export const putMember = async (req, res) => {
     }
 }
 
-export const postMember = async (req, res) => {}
+export const postMember = async (req, res) => {
+    try {
+        const {
+            mem_img, mem_name, mem_pos,
+        } = req.body;
+        const create_at = new Date();
+
+        let check = await model.Teams.findOne({
+            where: {mem_name, mem_pos, mem_img}
+        })
+
+        if (check){
+            return responseData(res, "Fail", "Member already exists in the table", 200)
+        }
+
+        const member = await model.Teams.create({
+            mem_img,
+            mem_name,
+            mem_pos,
+            create_at,
+        });
+
+        return responseData(res, "Success", member, 201)
+
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500)
+    }
+}
 
 
 // NOT have any API ?
@@ -283,7 +398,30 @@ export const putFieldsList = async (req, res) => {
     }
 }
 
-export const postFieldsList = async (req, res) => {}
+export const postFieldsList = async (req, res) => {
+    try {
+        const {
+            field_name
+        } = req.body;
+        const create_at = new Date();
+        const check = await model.Fields.findOne({
+            where: { field_name },
+        });
+
+        if (check){
+            return responseData(res, "Fail", "Field already exists in the table", 200)
+        }
+
+        let data = await model.Fields.create({
+            field_name,
+            create_at
+        })
+        
+        return responseData(res, "Success", data, 201)
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500)
+    }
+}
 
 
 // Fields Detail
@@ -315,7 +453,39 @@ export const putFieldDetail = async (req, res) => {
     }
 }
 
-export const postFieldDetail = async (req, res) => {}
+export const postFieldDetail = async (req, res) => {
+    try {
+        const { fPost_id } = req.params;
+        const {
+            fPost_title, fPost_content,
+        } = req.body;
+        const create_at = new Date();
+        let check1 = await model.FieldPost.findOne({
+            where: {fPost_title, fPost_content}
+        })
+
+        let check2 = await model.Post.findOne({
+            where: {fPost_id}
+        })
+
+        if (check1) {
+            return responseData(res, "Fail", "Field detail already exists in the table", 200)
+        } else if(!check2) {
+            return responseData(res, "Fail", "Cannot find Field Item", 404)
+        }
+
+        const data = await model.FieldPost.create({
+            fPost_title, 
+            fPost_content,
+            create_at,
+            post_id: fPost_id,
+        })
+
+        return responseData(res, "Success", data, 201)
+    } catch (e) {
+        return responseData(res, "Error", e.message, 500)
+    }
+}
 
 
 // Projects
@@ -353,7 +523,32 @@ export const putCustomers = async (req, res) => {
     }
 }
 
-export const postCustomers = async (req, res) => {}
+export const postCustomers = async (req, res) => {
+    try {
+        const {
+            img_name, img_content
+        } = req.body;
+        const create_at = new Date();
+        const check = await model.Image.findOne({
+            where: { img_type: "customer", img_name, img_content },
+        });
+
+        if (check) {
+            return responseData(res, "Fail", "Customer already exists in the table", 200)
+        }
+
+        const data = await model.Image.create({
+            img_name,
+            img_type: "customer",
+            img_content,
+            create_at,
+        });
+
+        return responseData(res, "Success", data, 201)
+    } catch (err) {
+        return responseData(res, "Error", err.message, 500);
+    }
+}
 
 export const getAdminDetails = async (req, res) => {
     try {
