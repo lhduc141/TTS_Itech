@@ -1,10 +1,11 @@
 import express from "express";
-import {forgetPassword, login} from "../controllers/authController.js";
+import {forgetPassword, login, logout} from "../controllers/authController.js";
 
 const authRoutes = express.Router();
 
-authRoutes.get("/login", login);
-authRoutes.put("/forgetPassword", forgetPassword);
+authRoutes.post("/login", login);
+authRoutes.post("logout", logout);
+authRoutes.post("/forgetPassword", forgetPassword);
 
 export default authRoutes;
 
