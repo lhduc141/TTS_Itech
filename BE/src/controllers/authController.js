@@ -37,7 +37,7 @@ export const login = async (req, res) => {
                 //UPDATE.Admin
                 await model.Admin.update(
                     {
-                        token, reftoken,
+                        token, reftoken, update_at
                     },
                     {
                         where: {
@@ -46,7 +46,7 @@ export const login = async (req, res) => {
                     }
                 );
 
-                responseData(res, "Success", token, 200);
+                responseData(res, "Success", {"token": token}, 200);
             } else {
                 responseData(res, "Wrong Pass", "", 400);
             }

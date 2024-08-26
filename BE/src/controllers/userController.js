@@ -186,6 +186,7 @@ export const getDetailInformation = async (req, res) => {
                 ['cpn_id', 'id'],
                 ['cpn_name', 'name'],
                 ['cpn_sname', 'sname'],
+                'phone',
                 ['cpn_address', 'address'],
                 ['cpn_title', 'title'],
                 ['cpn_desc', 'desc'],

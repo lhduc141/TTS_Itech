@@ -1,37 +1,21 @@
-//yarn add jsonwebtoken
-//  1. ma hoa du lieu
-//  2. kiem tra token hop le
-//  3. giai token
-
 import jwt from "jsonwebtoken";
+import { responseData } from "./response.js";
 
-//TOKEN
+
+// TOKEN ---------------------------------------------------
 export const createToken = (data) => {
-    let token = jwt.sign({ data }, "CREATE", {
+    let token = jwt.sign({ data }, "UTECHCOMPANY", {
         algorithm: "HS256",
-        expiresIn: "10m",
+        expiresIn: "7d",
     });
 
     return token;
 };
-
 export const checkToken = (token) =>
-    jwt.verify(token, "BIMAT", (err, decode) => err);
+    jwt.verify(token, "UTECHCOMPANY", (err, decode) => err);
 
-export const verifyToken = (req, res, next) => {
-    let { token } = req.headers;
-    let check = checkToken(token);
 
-    if (check == null) {
-        //token hop le
-        next();
-    } else {
-        //toke khong hop le
-        res.status(401).send(check.name);
-    }
-};
-
-//REF TOKEN
+// REF TOKEN ---------------------------------------------------
 export const createRefToken = (data) => {
     let token = jwt.sign({ data }, "KO_BIMAT", {
         algorithm: "HS256",
@@ -40,10 +24,33 @@ export const createRefToken = (data) => {
 
     return token;
 };
-
 export const checkRefToken = (token) =>
     jwt.verify(token, "KO_BIMAT", (err, decode) => err);
 
+
+// Decode Token ---------------------------------------------------
 export const decodeToken = (token) => {
     return jwt.decode(token);
+};
+
+
+// Verify Token ---------------------------------------------------
+export const verifyToken = (req, res, next) => {
+    let token = req.headers['authorization'];
+
+    if (!token) {
+        return responseData(res, "Fail", "No token provided", 401);
+    }
+
+    if (token.startsWith("Bearer ")) {
+        token = token.slice(7, token.length).trimLeft();
+    }
+
+    const isInvalidToken = checkToken(token);
+
+    if (!isInvalidToken) {
+        next();
+    } else {
+        responseData(res, "Fail", "Failed to authenticate token", 400); // Token is invalid
+    }
 };
