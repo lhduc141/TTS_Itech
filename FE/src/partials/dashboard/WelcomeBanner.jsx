@@ -3,19 +3,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function WelcomeBanner() {
-  const [aboutUsOpen, setAboutUsOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   let timeoutId;
 
-  const openAboutUs = () => {
-    setAboutUsOpen(true);
+  const openDropdown = (dropdownName) => {
+    setActiveDropdown(dropdownName);
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
   };
 
-  const closeAboutUs = () => {
+  const closeDropdown = () => {
     timeoutId = setTimeout(() => {
-      setAboutUsOpen(false);
+      setActiveDropdown(null);
     }, 200);
   };
 
@@ -30,29 +30,49 @@ function WelcomeBanner() {
       {/* Content */}
       <div className="relative z-10">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-1">Avocado from Mexico</h1>
+          <h1 className="text-2xl md:text-3xl text-slate-800 font-bold mb-1">Avocado from Mexico</h1>
           <div className="flex space-x-8">
             <div className="text-xl"><Link to="/" className="hover:underline">Trang chủ</Link></div>
             <div
               className="text-xl relative"
-              onMouseEnter={openAboutUs}
-              onMouseLeave={closeAboutUs}
+              onMouseEnter={() => openDropdown('aboutUs')}
+              onMouseLeave={closeDropdown}
             >
               <button className="hover:underline">Về chúng tôi</button>
-              {aboutUsOpen && (
+              {activeDropdown === 'aboutUs' && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded shadow-lg z-30"
+                  className="absolute top-full left-0 mt-2 w-48 bg-indigo-300 rounded shadow-lg z-30"
                   onMouseEnter={cancelClose}
-                  onMouseLeave={closeAboutUs}
+                  onMouseLeave={closeDropdown}
                 >
                   <div className="py-1">
-                    <Link to="/Aboutus" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700">Về chúng tôi</Link>
-                    <Link to="/Team" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700">Đội ngũ</Link>
+                    <Link to="/Aboutus" className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400">Về chúng tôi</Link>
+                    <Link to="/Team" className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400">Đội ngũ</Link>
                   </div>
                 </div>
               )}
             </div>
-            <div className="text-xl"><Link to="/services" className="hover:underline">Lĩnh vực</Link></div>
+            <div
+              className="text-xl relative"
+              onMouseEnter={() => openDropdown('services')}
+              onMouseLeave={closeDropdown}
+            >
+              <button className="hover:underline">Lĩnh vực</button>
+              {activeDropdown === 'services' && (
+                <div
+                  className="absolute top-full left-0 mt-2 w-48 bg-indigo-300 rounded shadow-lg z-30"
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={closeDropdown}
+                >
+                  <div className="py-1">
+                    <Link to="#" className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400">BẢO TRÌ HỆ THỐNG CNTT</Link>
+                    <Link to="#" className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400">DỊCH VỤ HỖ TRỢ CNTT</Link>
+                    <Link to="#" className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400">DỊCH VỤ CUNG CẤP EMAIL</Link>
+                    <Link to="#" className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400">DỊCH VỤ WEBSITE & MÁY CHỦ ẢO</Link>
+                  </div>
+                </div>
+              )}
+            </div>
             <div className="text-xl"><Link to="/customers" className="hover:underline">Khách hàng</Link></div>
             <div className="text-xl"><Link to="/Contact" className="hover:underline">Liên hệ</Link></div>
           </div>
