@@ -21,9 +21,14 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <div className="py-10 bg-gray-100">
+    <div
+      className="py-10 my-12 bg-gray-100"
+      style={{
+        boxShadow: "0px 10px 10px 10px rgba(0, 0, 0, 0.2)",
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl font-bold text-blue-800 mb-6">
+        <h2 className="text-3xl font-bold text-blue-800 mb-6">
           Tại sao <span className="text-blue-600">chọn chúng tôi?</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

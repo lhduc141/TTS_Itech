@@ -1,20 +1,20 @@
 /* eslint-disable no-unused-vars */
 // Dashboard.jsx
-import React from 'react';
+import React from "react";
 //import DashboardAvatars from '../partials/dashboard/DashboardAvatars';
 //import FilterButton from '../components/DropdownFilter';
 //import Datepicker from '../components/Datepicker';
-import DashboardCard07 from '../partials/dashboard/DashboardCard07';
-import DashboardCard10 from '../partials/dashboard/DashboardCard10';
-import DashboardCard12 from '../partials/dashboard/DashboardCard12';
-import DashboardCard13 from '../partials/dashboard/DashboardCard13';
-import Banner from '../partials/Banner';
-import Customers from './Customers';
-import Carousel from './Carousel';
-import WhyChooseUs from './WhyChooseUs';
-import LeaveMess from './LeaveMessage';
-import Comments from './Comments';
-import Services from './Services';
+import DashboardCard07 from "../partials/dashboard/DashboardCard07";
+import DashboardCard10 from "../partials/dashboard/DashboardCard10";
+import DashboardCard12 from "../partials/dashboard/DashboardCard12";
+import DashboardCard13 from "../partials/dashboard/DashboardCard13";
+import Banner from "../partials/Banner";
+import Customers from "./Customers";
+import Carousel from "./Carousel";
+import WhyChooseUs from "./WhyChooseUs";
+import LeaveMess from "./LeaveMessage";
+import Comments from "./Comments";
+import Services from "./Services";
 
 function Dashboard() {
   return (
@@ -36,7 +36,9 @@ function Dashboard() {
         <WhyChooseUs />
         <Comments />
       </div>
-      <div className="px-4 sm:px-6 lg:px-8 py-8"><Customers /></div>
+      <div className="px-4 sm:px-6 lg:px-8 py-8">
+        <Customers />
+      </div>
       <Banner />
     </>
   );

@@ -9,8 +9,14 @@ const LeaveMess = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <p className="text-gray-600 leading-relaxed mb-10">
-              Nội dung giới thiệu về công ty. Đây là đoạn văn bản mô tả về công ty,
-              dịch vụ cung cấp, và lý do khách hàng nên chọn công ty.
+              Hòa nhịp chung với xu hướng phát triển vượt bậc của thị trường,
+              CÔNG TY CÔNG NGHỆ UTECH ra đời đáp ứng và thỏa mãn tối ưu nhu cầu,
+              các đòi hỏi khắt khe của Doanh nghiệp. Là một tập thể với những
+              người trẻ, nhiệt huyết và tầm nhìn dài hạn, kết hợp với công nghệ
+              - kỹ thuật hiện đại, không chỉ là đơn vị cung cấp dịch vụ CNTT đến
+              khách hàng mà chúng tôi luôn đồng hành, phấn đấu mang đến cho
+              khách hàng chất lượng dịch vụ công nghệ tốt nhất đem lại hiệu quả
+              kinh tế cao nhất.
             </p>
           </div>
           <form className="bg-white p-6 shadow-lg rounded-lg">

@@ -18,13 +18,15 @@ const Services = () => {
     },
     {
       title: "Bảo Trì Hệ Thống CNTT",
-      description: "Cung cấp dịch vụ bảo trì hệ thống theo yêu cầu của khách hàng.",
+      description:
+        "Cung cấp dịch vụ bảo trì hệ thống theo yêu cầu của khách hàng.",
       image: "image-placeholder.png",
       hasMoreLink: true, // Hiển thị liên kết "XEM THÊM"
     },
     {
       title: "Dịch Vụ Hỗ Trợ CNTT",
-      description: "Dịch vụ hỗ trợ CNTT cho doanh nghiệp như IT tại chỗ và IT từ xa.",
+      description:
+        "Dịch vụ hỗ trợ CNTT cho doanh nghiệp như IT tại chỗ và IT từ xa.",
       image: "image-placeholder.png",
       hasMoreLink: true,
     },
@@ -36,7 +38,8 @@ const Services = () => {
     },
     {
       title: "Dịch Vụ Website & Máy Chủ Ảo",
-      description: "Cung cấp máy chủ để phục vụ Website - chia sẻ dữ liệu trực tuyến.",
+      description:
+        "Cung cấp máy chủ để phục vụ Website - chia sẻ dữ liệu trực tuyến.",
       image: "image-placeholder.png",
       hasMoreLink: true,
     },
@@ -45,7 +48,7 @@ const Services = () => {
   return (
     <div className="py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {services.map((service, i) => (
             <div
               key={i}
@@ -68,10 +71,7 @@ const Services = () => {
                 </div>
                 {/* Chỉ hiển thị "XEM THÊM" nếu có liên kết */}
                 {service.hasMoreLink && (
-                  <a
-                    href="#"
-                    className="mt-4 text-blue-600 hover:underline"
-                  >
+                  <a href="#" className="mt-4 text-blue-600 hover:underline">
                     XEM THÊM &gt;
                   </a>
                 )}
