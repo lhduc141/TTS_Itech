@@ -11,6 +11,10 @@ import AboutUsPage from "./pages/Aboutus";
 import Layout from "./components/layout/Layout";
 import Customers from "./pages/Customers";
 import Teams from "./pages/Teams";
+import MaintenanceService from "./pages/Maintaince";
+import ITSupportService from "./pages/SupportService";
+import EmailServices from "./pages/ProvideMail";
+import WebsiteVirtualServer from "./pages/WebVirtual";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -66,7 +70,38 @@ function App() {
             </Layout>
           }
         />
-
+        <Route
+         path="/Maintaince"
+         element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+              <MaintenanceService />
+          </Layout>
+         }
+        />
+        <Route
+         path="/SupportService"
+         element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+              <ITSupportService />
+          </Layout>
+         }
+        />
+        <Route
+         path="/ProvideMail"
+         element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+              <EmailServices />
+          </Layout>
+         }
+        />
+        <Route
+         path="/WebVirtual"
+         element={
+          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+              <WebsiteVirtualServer />
+          </Layout>
+         }
+        />
         {/* Admin Page */}
       </Routes>
     </>

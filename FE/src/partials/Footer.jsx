@@ -3,6 +3,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 const Footer = () => {
+
   return(
     <section className="py-10 bg-gray-50 sm:pt-16 lg:pt-24">
     <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -64,19 +65,19 @@ const Footer = () => {
 
                 <div className="mt-6 space-y-4">
                     <div>
-                        <Link to="#" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">  BẢO TRÌ HỆ THỐNG CNTT </Link>
+                        <Link to="/Maintaince" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">  BẢO TRÌ HỆ THỐNG CNTT </Link>
                     </div>
 
                     <div>
-                        <Link to="#" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> DỊCH VỤ HỖ TRỢ CNTT </Link>
+                        <Link to="/SupportService" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> DỊCH VỤ HỖ TRỢ CNTT </Link>
                     </div>
 
                     <div>
-                        <Link to="#" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> DỊCH VỤ CUNG CẤP EMAIL </Link>
+                        <Link to="/ProvideMail" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> DỊCH VỤ CUNG CẤP EMAIL </Link>
                     </div>
 
                     <div>
-                        <Link to="#" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">  DỊCH VỤ WEBSITE & MÁY CHỦ ẢO </Link>
+                        <Link to="/WebVirtual" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">  DỊCH VỤ WEBSITE & MÁY CHỦ ẢO </Link>
                     </div>
                 </div>
             </div>

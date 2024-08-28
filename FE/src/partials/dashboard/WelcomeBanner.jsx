@@ -79,31 +79,31 @@ function WelcomeBanner() {
               <button className="hover:underline">Lĩnh vực</button>
               {activeDropdown === "services" && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-48 bg-indigo-300 rounded shadow-lg z-30"
+                  className="absolute top-full left-0 mt-2 w-48 bg-white rounded shadow-lg z-30"
                   onMouseEnter={cancelClose}
                   onMouseLeave={closeDropdown}
                 >
                   <div className="py-1">
                     <Link
-                      to="#"
+                      to="/Maintaince"
                       className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400"
                     >
                       BẢO TRÌ HỆ THỐNG CNTT
                     </Link>
                     <Link
-                      to="#"
+                      to="/SupportService"
                       className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400"
                     >
                       DỊCH VỤ HỖ TRỢ CNTT
                     </Link>
                     <Link
-                      to="#"
+                      to="/ProvideMail"
                       className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400"
                     >
                       DỊCH VỤ CUNG CẤP EMAIL
                     </Link>
                     <Link
-                      to="#"
+                      to="/WebVirtual"
                       className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400"
                     >
                       DỊCH VỤ WEBSITE & MÁY CHỦ ẢO
