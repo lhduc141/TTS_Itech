@@ -1,10 +1,29 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import utechlogo from "../../images/utech_logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fieldListThunk } from "../../redux/userReducer/userThunk";
 
 function WelcomeBanner() {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [fieldListArr, setFieldListArr] = useState([]);
+
+  const dispatch = useDispatch();
+
+  // Corrected: `fieldList` should not be destructured
+  const fieldList = useSelector((state) => state.userReducer.fieldList);
+
+  useEffect(() => {
+    dispatch(fieldListThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (fieldList) {
+      setFieldListArr(fieldList);
+    }
+  }, [fieldList]);
+
   let timeoutId;
 
   const openDropdown = (dropdownName) => {
@@ -77,37 +96,22 @@ function WelcomeBanner() {
               onMouseLeave={closeDropdown}
             >
               <button className="hover:underline">Lĩnh vực</button>
-              {activeDropdown === "services" && (
+              {activeDropdown === "services" && fieldListArr.length > 0 && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-48 bg-indigo-300 rounded shadow-lg z-30"
+                  className="absolute top-full left-0 mt-2 w-48 bg-white rounded shadow-lg z-30"
                   onMouseEnter={cancelClose}
                   onMouseLeave={closeDropdown}
                 >
                   <div className="py-1">
-                    <Link
-                      to="#"
-                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400"
-                    >
-                      BẢO TRÌ HỆ THỐNG CNTT
-                    </Link>
-                    <Link
-                      to="#"
-                      className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400"
-                    >
-                      DỊCH VỤ HỖ TRỢ CNTT
-                    </Link>
-                    <Link
-                      to="#"
-                      className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400"
-                    >
-                      DỊCH VỤ CUNG CẤP EMAIL
-                    </Link>
-                    <Link
-                      to="#"
-                      className="block px-4 py-2 text-sm text-slate-700  hover:bg-indigo-400"
-                    >
-                      DỊCH VỤ WEBSITE & MÁY CHỦ ẢO
-                    </Link>
+                    {fieldListArr?.map((field, index) => (
+                      <Link
+                        key={field.field_id}
+                        to="#"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400"
+                      >
+                        {field.field_name}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               )}

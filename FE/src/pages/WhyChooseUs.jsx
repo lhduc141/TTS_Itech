@@ -1,7 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const WhyChooseUs = () => {
+  const [whyUs, setWhyUs] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // dispatch();
+  }, []);
+
   const reasons = [
     {
       title: "Sứ Mệnh",

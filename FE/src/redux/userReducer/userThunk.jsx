@@ -1,7 +1,59 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { message } from "antd";
+import { userService } from "../../services/userService";
 
-export const userThunk = createAsyncThunk(
-  "userReducer/loginThunk",
-  async (payload) => {}
+export const fieldListThunk = createAsyncThunk(
+  "userReducer/fieldListThunk",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const data = await userService.getFieldList();
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error.message,
+        code: error.code,
+        response: error.response ? error.response.data : null, // Include any response data if available
+      });
+    }
+  }
+);
+
+export const fieldPostThunk = createAsyncThunk(
+  "userReducer/fieldPostThunk",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const data = await userService.getFieldPost();
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error.message,
+        code: error.code,
+        response: error.response ? error.response.data : null, // Include any response data if available
+      });
+    }
+  }
+);
+
+export const whyUsPost = createAsyncThunk("userReducer/whyUsPost", async () => {
+  try {
+    const data = 1;
+
+    return data;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const commentList = createAsyncThunk(
+  "userReducer/comemnts",
+  async () => {
+    try {
+      const data = await userService.getComment();
+
+      return data.data;
+    } catch (error) {
+      return error;
+    }
+  }
 );
