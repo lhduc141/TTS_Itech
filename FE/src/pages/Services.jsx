@@ -1,21 +1,28 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fieldListThunk, fieldPostThunk } from "../redux/userReducer/userThunk";
 
 const Services = () => {
+  const [field, setField] = useState([]);
+  const [service, setService] = useState([]);
+  const fieldList = useSelector((state) => state.userReducer.fieldList);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fieldListThunk());
+  }, []);
+  useEffect(() => {
+    if (fieldList) {
+      setField(fieldList);
+    }
+  }, [fieldList]);
+  useEffect(() => {
+    dispatch(fieldPostThunk());
+  }, []);
+
   const services = [
-    {
-      title: "LĨNH VỰC CUNG CẤP",
-      description: (
-        <ul className="list-disc pl-5 text-gray-600 mt-4">
-          <li className="mb-2">Bảo trì Hệ thống CNTT</li>
-          <li className="mb-2">Dịch vụ hỗ trợ CNTT</li>
-          <li className="mb-2">Cung cấp máy chủ Email</li>
-          <li>Cung cấp Website & Máy chủ</li>
-        </ul>
-      ),
-      image: "", // Bạn có thể để trống hoặc sử dụng một hình ảnh khác.
-      hasMoreLink: false, // Không hiển thị liên kết "XEM THÊM"
-    },
     {
       title: "Bảo Trì Hệ Thống CNTT",
       description:
@@ -49,6 +56,44 @@ const Services = () => {
     <div className="py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div
+            key={0}
+            className="bg-white p-4 shadow-lg rounded-lg flex flex-col"
+          >
+            {/* Nếu không có hình ảnh thì bỏ qua */}
+            {services.image && (
+              <img
+                src={services.image}
+                alt={services.title}
+                className="w-full h-32 object-cover rounded-t-lg"
+              />
+            )}
+            <div className="flex flex-col justify-between flex-grow mt-4">
+              <h3 className="text-lg font-semibold text-gray-700">
+                LĨNH VỰC CUNG CẤP
+              </h3>
+              <div className="mt-2 text-sm text-gray-500">
+                <ul className="list-disc pl-5 text-gray-600 mt-4">
+                  {field?.map((fieldItem, item) => {
+                    return (
+                      <li key={item} className="mb-2">
+                        {fieldItem.field_name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              {/* Chỉ hiển thị "XEM THÊM" nếu có liên kết */}
+              {services.hasMoreLink && (
+                <a href="#" className="mt-4 text-blue-600 hover:underline">
+                  XEM THÊM &gt;
+                </a>
+              )}
+            </div>
+          </div>
+
+          {field?.map((fieldPost, item) => {})}
+
           {services.map((service, i) => (
             <div
               key={i}

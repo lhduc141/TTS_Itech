@@ -106,7 +106,7 @@ function WelcomeBanner() {
                     {fieldListArr?.map((field, index) => (
                       <Link
                         key={field.field_id}
-                        to="#"
+                        to={`/fieldId:${field.field_id}`}
                         className="block px-4 py-2 text-sm text-slate-700 hover:bg-indigo-400"
                       >
                         {field.field_name}

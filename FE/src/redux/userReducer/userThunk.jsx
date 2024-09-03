@@ -22,7 +22,7 @@ export const fieldPostThunk = createAsyncThunk(
   "userReducer/fieldPostThunk",
   async (payload, { rejectWithValue }) => {
     try {
-      const data = await userService.getFieldPost();
+      const data = await userService.getFieldPost(payload);
 
       return data;
     } catch (error) {
