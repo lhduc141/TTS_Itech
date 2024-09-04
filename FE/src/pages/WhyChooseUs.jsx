@@ -1,32 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { whyUsPost } from "../redux/userReducer/userThunk";
 
 const WhyChooseUs = () => {
   const [whyUs, setWhyUs] = useState([]);
+  const wuPostList = useSelector((state) => state.userReducer.whyUsPost);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // dispatch();
-  }, []);
+    dispatch(whyUsPost());
+  }, [dispatch]);
 
-  const reasons = [
-    {
-      title: "Sứ Mệnh",
-      content:
-        "Sứ mệnh của chúng tôi là sử dụng CNTT và các dịch vụ công nghệ số nhằm nâng cao hiệu suất làm việc và gia tăng giá trị cho khách hàng.",
-    },
-    {
-      title: "Tầm Nhìn - Đồng Hành",
-      content:
-        "Tầm nhìn của chúng tôi là đồng hành cùng doanh nghiệp để phát triển và thành công trong môi trường kinh doanh số.",
-    },
-    {
-      title: "Nguồn Nhân Lực",
-      content:
-        "Đội ngũ nhân lực của chúng tôi có kinh nghiệm lâu năm, được đào tạo chuyên sâu, sẵn sàng đáp ứng mọi yêu cầu của khách hàng.",
-    },
-  ];
+  useEffect(() => {
+    if (wuPostList?.PostDetails?.length > 0) {
+      setWhyUs(wuPostList.PostDetails);
+      setLoading(false);
+    }
+  }, [wuPostList]);
 
   return (
     <div
@@ -40,18 +32,18 @@ const WhyChooseUs = () => {
           Tại sao <span className="text-blue-600">chọn chúng tôi?</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reasons.map((reason, index) => (
+          {whyUs?.map((whyus, index) => (
             <div
-              key={index}
+              key={whyus.pDetail_id}
               className="flex flex-col items-center bg-white p-6 shadow-lg rounded-lg text-center"
             >
               <div className="bg-blue-800 text-white w-12 h-12 flex items-center justify-center rounded-full mb-4">
                 {index + 1}
               </div>
               <h3 className="text-lg font-semibold text-gray-700 mb-4">
-                {reason.title}
+                {whyus.pDetail_title}
               </h3>
-              <p className="text-gray-600">{reason.content}</p>
+              <p className="text-gray-600">{whyus.pDetail_content}</p>
             </div>
           ))}
         </div>

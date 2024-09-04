@@ -37,13 +37,25 @@ export const fieldPostThunk = createAsyncThunk(
 
 export const whyUsPost = createAsyncThunk("userReducer/whyUsPost", async () => {
   try {
-    const data = 1;
+    const data = await userService.getWhyUsPost();
 
     return data;
   } catch (error) {
     return error;
   }
 });
+export const aboutUsPost = createAsyncThunk(
+  "userReducer/aboutUsPost",
+  async () => {
+    try {
+      const data = await userService.getAboutUs();
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 
 export const commentList = createAsyncThunk(
   "userReducer/comemnts",

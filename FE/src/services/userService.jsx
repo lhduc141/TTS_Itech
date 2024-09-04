@@ -11,6 +11,11 @@ export const userService = {
     return http.get(url);
   },
 
+  getAboutUs: () => {
+    let url = "/user/about-us";
+    return http.get(url);
+  },
+
   getComment: () => {
     let url = "/user/feedback";
     return http.get(url);

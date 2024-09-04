@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { commentList, fieldListThunk } from "./userThunk";
+import {
+  aboutUsPost,
+  commentList,
+  fieldListThunk,
+  whyUsPost,
+} from "./userThunk";
 
 const initialState = {
   fieldList: [],
   comments: [],
+  whyUsPost: [],
+  aboutUsPost: [],
 };
 
 const userReducer = createSlice({
@@ -17,6 +24,12 @@ const userReducer = createSlice({
       })
       .addCase(commentList.fulfilled, (state, action) => {
         state.comments = action.payload.data;
+      })
+      .addCase(whyUsPost.fulfilled, (state, action) => {
+        state.whyUsPost = action.payload.data.data;
+      })
+      .addCase(aboutUsPost.fulfilled, (state, action) => {
+        state.aboutUsPost = action.payload.data.data;
       });
   },
 });
