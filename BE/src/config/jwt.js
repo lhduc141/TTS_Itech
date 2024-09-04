@@ -43,7 +43,7 @@ export const verifyToken = (req, res, next) => {
     }
 
     if (token.startsWith("Bearer ")) {
-        token = token.slice(7, token.length).trimLeft();
+        token = token.slice(7, token.length).trim();
     }
 
     const isInvalidToken = checkToken(token);

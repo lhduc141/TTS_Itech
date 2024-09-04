@@ -39,6 +39,33 @@ export const getFieldsList = async (req, res) => {
         responseData(res, "Error ...", "", 500);
     }
 }
+export const getAllFieldPost = async (req, res) => {
+    try {
+        let {lang_id} = req.headers;
+        let data = await model.Fields.findAll({
+            where: {lang_id},
+            attributes: ['field_id', 'field_name',
+            ],
+            include: [
+                {
+                    model: model.FieldPost,
+                    attributes: [
+                        ['fPost_id', 'fieldPostId'],
+                        ['fPost_title', 'fieldPostTitle'],
+                        ['fPost_content', 'fPostContent'],
+                    ]
+                }
+            ]
+        })
+        if (!data) {
+            responseData(res, "Fail", "No fields", 404);
+        }
+
+        responseData(res, "Success", data, 200);
+    } catch {
+        responseData(res, "Error ...", "", 500);
+    }
+}
 
 export const getFieldsDetail = async (req, res) => {
     try {
@@ -70,7 +97,7 @@ export const getAboutUs = async (req, res) => {
     try {
         let { lang_id } = req.headers;
 
-        let data = await model.Post.findAll({
+        let data = await model.Post.findOne({
             where: { post_type: 'aboutus', lang_id },
             attributes: [
                 ['post_id', 'postId'],
@@ -103,8 +130,8 @@ export const getWhyUs = async (req, res) => {
     try {
         let { lang_id } = req.headers;
 
-        let data = await model.Post.findAll({
-            where: { post_type: 'whyus', lang_id },
+        let data = await model.Post.findOne({
+            where: { post_type: "whyus", lang_id },
             attributes: [
                 ['post_id', 'postId'],
                 ['create_at', 'createdAt'],
@@ -119,7 +146,7 @@ export const getWhyUs = async (req, res) => {
                     ]
                 }
             ]
-        });
+        })
 
         if (data.length === 0) {
             return res.status(404).json({ message: "No posts found" });

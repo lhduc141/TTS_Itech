@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    getAboutUs,
+    getAboutUs, getAllFieldPost,
     getCarousel,
     getCustomer,
     getDetailInformation,
@@ -15,6 +15,7 @@ userRoutes.get("/carousel", getCarousel);
 userRoutes.get("/about-us", getAboutUs);
 userRoutes.get("/members", getMembers);
 userRoutes.get("/fields", getFieldsList);
+userRoutes.get("/all-field-post", getAllFieldPost);
 userRoutes.get("/fields-detail/:field_id", getFieldsDetail)
 userRoutes.get("/why-us", getWhyUs);
 userRoutes.get("/feedback", getFeedback);
