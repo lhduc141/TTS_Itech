@@ -24,11 +24,7 @@ export const getFieldsList = async (req, res) => {
         let {lang_id} = req.headers;
         let data = await model.Fields.findAll({
             where: {lang_id},
-            attributes: ['field_id', 'field_name',
-                ['create_at', 'createdAt'],
-                ['update_at', 'updatedAt'],
-                ['delete_at', 'deletedAt']
-            ]
+            attributes: ['field_id', 'field_name', 'fieldDesc', 'fieldImage'],
         })
         if (!data) {
             responseData(res, "Fail", "No fields", 404);
@@ -41,21 +37,10 @@ export const getFieldsList = async (req, res) => {
 }
 export const getAllFieldPost = async (req, res) => {
     try {
-        let {lang_id} = req.headers;
+        let { lang_id } = req.headers;
         let data = await model.Fields.findAll({
-            where: {lang_id},
-            attributes: ['field_id', 'field_name',
-            ],
-            include: [
-                {
-                    model: model.FieldPost,
-                    attributes: [
-                        ['fPost_id', 'fieldPostId'],
-                        ['fPost_title', 'fieldPostTitle'],
-                        ['fPost_content', 'fPostContent'],
-                    ]
-                }
-            ]
+            where: { lang_id },
+            attributes: ['field_id', 'field_name', 'fieldDesc', 'fieldImage'],
         })
         if (!data) {
             responseData(res, "Fail", "No fields", 404);
