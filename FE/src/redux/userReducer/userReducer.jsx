@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  aboutUsPost,
-  commentList,
   fieldListThunk,
-  whyUsPost,
+  getAboutUsPost,
+  getCarousel,
+  getCommentList,
+  getWhyUsPost,
 } from "./userThunk";
 
 const initialState = {
@@ -11,6 +12,8 @@ const initialState = {
   comments: [],
   whyUsPost: [],
   aboutUsPost: [],
+  carouselImg: [],
+  members: [],
 };
 
 const userReducer = createSlice({
@@ -22,14 +25,17 @@ const userReducer = createSlice({
       .addCase(fieldListThunk.fulfilled, (state, action) => {
         state.fieldList = action.payload.data.content;
       })
-      .addCase(commentList.fulfilled, (state, action) => {
+      .addCase(getCommentList.fulfilled, (state, action) => {
         state.comments = action.payload.data;
       })
-      .addCase(whyUsPost.fulfilled, (state, action) => {
+      .addCase(getWhyUsPost.fulfilled, (state, action) => {
         state.whyUsPost = action.payload.data.data;
       })
-      .addCase(aboutUsPost.fulfilled, (state, action) => {
+      .addCase(getAboutUsPost.fulfilled, (state, action) => {
         state.aboutUsPost = action.payload.data.data;
+      })
+      .addCase(getCarousel.fulfilled, (state, action) => {
+        state.carouselImg = action.payload.data.content;
       });
   },
 });

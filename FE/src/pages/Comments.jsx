@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { commentList } from "../redux/userReducer/userThunk";
+import { getCommentList } from "../redux/userReducer/userThunk";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
@@ -11,7 +11,7 @@ const Comments = () => {
   const cmtList = useSelector((state) => state.userReducer.comments);
 
   useEffect(() => {
-    dispatch(commentList());
+    dispatch(getCommentList());
   }, [dispatch]);
 
   useEffect(() => {

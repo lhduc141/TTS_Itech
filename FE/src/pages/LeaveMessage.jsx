@@ -3,11 +3,14 @@ import React from "react";
 
 const LeaveMess = () => {
   return (
-    <div className="py-10">
+    <div className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl font-bold text-blue-800 mb-6">Về chúng tôi</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-[3.5fr,6.5fr] gap-12">
           <div>
+            <h2 className="text-xl text-justify font-bold text-blue-800 mb-6">
+              Về chúng tôi
+            </h2>
+            <hr />
             <p className="text-gray-600 leading-relaxed mb-10">
               Hòa nhịp chung với xu hướng phát triển vượt bậc của thị trường,
               CÔNG TY CÔNG NGHỆ UTECH ra đời đáp ứng và thỏa mãn tối ưu nhu cầu,
@@ -19,30 +22,42 @@ const LeaveMess = () => {
               kinh tế cao nhất.
             </p>
           </div>
-          <form className="bg-white p-6 shadow-lg rounded-lg">
+          <form className="bg-white p-6 shadow-lg rounded-xl">
             <h3 className="text-lg font-semibold text-gray-700 mb-4">
               Để lại tin nhắn
             </h3>
-            <input
-              type="text"
-              placeholder="Tên và họ của bạn"
-              className="w-full border-gray-300 rounded-lg p-2 mb-4"
-            />
-            <input
-              type="email"
-              placeholder="Email của bạn"
-              className="w-full border-gray-300 rounded-lg p-2 mb-4"
-            />
-            <input
-              type="text"
-              placeholder="Chủ đề"
-              className="w-full border-gray-300 rounded-lg p-2 mb-4"
-            />
-            <textarea
-              placeholder="Nội dung"
-              className="w-full border-gray-300 rounded-lg p-2 mb-4"
-              rows="4"
-            ></textarea>
+            <div className="flex">
+              <div className="w-[40%]">
+                <input
+                  type="text"
+                  placeholder="Công ty"
+                  className="w-full border-gray-300 rounded-lg p-2 mb-4"
+                />
+                <input
+                  type="text"
+                  placeholder="Tên và họ của bạn"
+                  className="w-full border-gray-300 rounded-lg p-2 mb-4"
+                />
+                <input
+                  type="email"
+                  placeholder="Email của bạn"
+                  className="w-full border-gray-300 rounded-lg p-2 mb-4"
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Chủ đề"
+                  className="w-full border-gray-300 rounded-lg p-2 mb-4"
+                />
+                <textarea
+                  placeholder="Nội dung"
+                  className="w-full border-gray-300 rounded-lg p-2 mb-4"
+                  rows="4"
+                ></textarea>
+              </div>
+            </div>
+
             <button
               type="submit"
               className="w-full bg-blue-800 text-white py-2 rounded-lg"

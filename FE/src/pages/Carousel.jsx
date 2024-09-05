@@ -3,12 +3,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import image from "../images/carousel1.jpg";
 import image2 from "../images/carousel2.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { getCarousel } from "../redux/userReducer/userThunk";
+import { BASE_URL_IMG } from "../services/urlConfig";
 
 const images = [image, image2, image, image2, image]; // Danh sách hình ảnh
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [carouselImg, setCarouselImg] = useState([]);
+
+  const carouselArr = useSelector((state) => state.userReducer.carouselImg);
   const intervalRef = useRef(null); // Sử dụng useRef để lưu trữ interval
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCarousel());
+  }, [dispatch]);
+  useEffect(() => {
+    setCarouselImg(carouselArr);
+  }, [carouselArr]);
 
   // Hàm chuyển đến ảnh tiếp theo
   const goToNext = () => {
@@ -48,7 +62,7 @@ const Carousel = () => {
       data-carousel="static"
     >
       <div className="relative h-56 md:h-96 overflow-hidden rounded-lg">
-        {images.map((img, index) => (
+        {carouselImg?.map((img, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out transform ${
@@ -57,7 +71,7 @@ const Carousel = () => {
             data-carousel-item
           >
             <img
-              src={img}
+              src={BASE_URL_IMG + img.img_content}
               className="w-full h-full object-cover"
               alt={`Slide ${index}`}
             />

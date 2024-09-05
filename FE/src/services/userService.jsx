@@ -25,4 +25,14 @@ export const userService = {
     let url = `user/fields-detail/`;
     return http.get(url);
   },
+
+  getCarousel: () => {
+    let url = "/user/carousel";
+    return http.get(url);
+  },
+
+  getTeamMembers: () => {
+    let url = "/user/members";
+    return http.get(url);
+  },
 };

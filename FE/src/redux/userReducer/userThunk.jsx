@@ -35,16 +35,19 @@ export const fieldPostThunk = createAsyncThunk(
   }
 );
 
-export const whyUsPost = createAsyncThunk("userReducer/whyUsPost", async () => {
-  try {
-    const data = await userService.getWhyUsPost();
+export const getWhyUsPost = createAsyncThunk(
+  "userReducer/whyUsPost",
+  async () => {
+    try {
+      const data = await userService.getWhyUsPost();
 
-    return data;
-  } catch (error) {
-    return error;
+      return data;
+    } catch (error) {
+      return error;
+    }
   }
-});
-export const aboutUsPost = createAsyncThunk(
+);
+export const getAboutUsPost = createAsyncThunk(
   "userReducer/aboutUsPost",
   async () => {
     try {
@@ -57,13 +60,26 @@ export const aboutUsPost = createAsyncThunk(
   }
 );
 
-export const commentList = createAsyncThunk(
+export const getCommentList = createAsyncThunk(
   "userReducer/comemnts",
   async () => {
     try {
       const data = await userService.getComment();
 
       return data.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getCarousel = createAsyncThunk(
+  "userReducer/carousels",
+  async () => {
+    try {
+      const data = await userService.getCarousel();
+
+      return data;
     } catch (error) {
       return error;
     }

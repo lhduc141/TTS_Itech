@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import image from "../images/favicon.png";
+import image from "../images/aboutus.jpg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { aboutUsPost } from "../redux/userReducer/userThunk";
+import { getAboutUsPost } from "../redux/userReducer/userThunk";
 
 const AboutUsPage = () => {
   const [aboutUs, setAboutUs] = useState([]);
@@ -12,7 +12,7 @@ const AboutUsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(aboutUsPost());
+    dispatch(getAboutUsPost());
   }, [dispatch]);
   useEffect(() => {
     if (auPostList?.PostDetails?.length > 0) {
@@ -28,8 +28,14 @@ const AboutUsPage = () => {
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4">Lời TRI ÂN</h2>
           <div className="flex">
-            <div className="flex-1">
-              <p className="mb-4">
+            <div
+              className="flex-1 border p-8 rounded-xl"
+              style={{
+                boxShadow:
+                  "inset 0px -5px 4px 0px rgba(255, 255, 255, 0.25), inset 7px 7px 20px 0px rgba(0, 0, 0, 0.35)",
+              }}
+            >
+              <p className="text-justify">
                 UTECH xin gởi lời cảm ơn sâu sắc nhất đến toàn thể Quý khách
                 hàng đã tin tưởng và lựa chọn UTECH là người bạn đồng hành trong
                 lĩnh vực truyền thông. Với phương châm hoạt động là đặt uy tín
@@ -45,16 +51,11 @@ const AboutUsPage = () => {
                 khách hàng trong thời đại công nghệ thông tin như vũ bão ngày
                 nay
               </p>
-              <p>
-                UTECH hệ thống nhân sự chuyên nghiệp, luôn nỗ lực mang đến giá
-                trị cốt lõi cho khách hàng, để tất cả các sản phẩm – dịch vụ sau
-                bán hàng tốt nhất.
-              </p>
             </div>
             <img
               src={image}
               alt="Gratitude"
-              className="w-1/3 ml-8 rounded-md shadow-md"
+              className="w-2/5 ml-8 rounded-xl shadow-md"
             />
           </div>
         </section>
@@ -64,10 +65,10 @@ const AboutUsPage = () => {
           <div className="flex justify-between space-x-8">
             {aboutUs?.map((post, index) => (
               <div key={post.pDetail_id} className="w-1/3">
-                <h3 className="text-xl font-semibold mb-2">
-                  {index + 1}. {post.pDetail_title}
+                <h3 className="text-xl font-semibold mb-2 bg-[#021a51] text-white text-center rounded-lg py-2">
+                  {post.pDetail_title}
                 </h3>
-                <p>{post.pDetail_content}</p>
+                <p className="text-justify">{post.pDetail_content}</p>
               </div>
             ))}
           </div>

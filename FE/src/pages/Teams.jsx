@@ -1,4 +1,16 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTeamMembers } from "../redux/userReducer/userThunk";
+
 const Teams = () => {
+  const [team, setTeam] = useState([]);
+  const dispatch = useDispatch();
+  const memList = useSelector((state) => state.userReducer.members);
+
+  useEffect(() => {
+    dispatch(getTeamMembers());
+  }, [dispatch]);
+
   const memberList = [
     {
       mem_name: "Đái Tú Nga",
