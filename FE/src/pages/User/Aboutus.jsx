@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import image from "../images/aboutus.jpg";
+import image from "../../images/aboutus.jpg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAboutUsPost } from "../redux/userReducer/userThunk";
+import { getAboutUsPost } from "../../redux/userReducer/userThunk";
+import Services from "./Services";
 
 const AboutUsPage = () => {
   const [aboutUs, setAboutUs] = useState([]);
@@ -76,52 +77,7 @@ const AboutUsPage = () => {
 
         <section>
           <h2 className="text-2xl font-bold mb-4">Lĩnh vực</h2>
-          <div className="flex justify-between">
-            <div className="w-1/4 p-4 bg-gray-100 rounded-md shadow-md">
-              <img
-                src={image}
-                alt="Service 1"
-                className="w-full mb-4 rounded-md"
-              />
-              <h3 className="text-xl font-semibold mb-2">
-                BẢO TRÌ HỆ THỐNG CNTT
-              </h3>
-              <p>
-                Cung cấp dịch vụ bảo trì hệ thống theo yêu cầu của khách hàng
-              </p>
-              <Link to="#" className="text-blue-500 hover:underline">
-                Xem thêm{" "}
-              </Link>
-            </div>
-            <div className="w-1/4 p-4 bg-gray-100 rounded-md shadow-md">
-              <img
-                src={image}
-                alt="Service 2"
-                className="w-full mb-4 rounded-md"
-              />
-              <h3 className="text-xl font-semibold mb-2">
-                DỊCH VỤ HỖ TRỢ CNTT
-              </h3>
-              <p>Hỗ trợ cho doanh nghiệp từ IT căn bản đến IT cao cấp</p>
-              <Link to="#" className="text-blue-500 hover:underline">
-                Xem thêm{" "}
-              </Link>
-            </div>
-            <div className="w-1/4 p-4 bg-gray-100 rounded-md shadow-md">
-              <img
-                src={image}
-                alt="Service 3"
-                className="w-full mb-4 rounded-md"
-              />
-              <h3 className="text-xl font-semibold mb-2">
-                DỊCH VỤ CUNG CẤP EMAIL
-              </h3>
-              <p>Cài đặt - Cung cấp - Quản trị máy chủ Email Hosting</p>
-              <Link to="#" className="text-blue-500 hover:underline">
-                Xem thêm{" "}
-              </Link>
-            </div>
-          </div>
+          <Services />
         </section>
       </div>
     </div>

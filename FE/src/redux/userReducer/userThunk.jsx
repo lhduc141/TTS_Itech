@@ -18,23 +18,6 @@ export const fieldListThunk = createAsyncThunk(
   }
 );
 
-export const fieldPostThunk = createAsyncThunk(
-  "userReducer/fieldPostThunk",
-  async (payload, { rejectWithValue }) => {
-    try {
-      const data = await userService.getFieldPost(payload);
-
-      return data;
-    } catch (error) {
-      return rejectWithValue({
-        message: error.message,
-        code: error.code,
-        response: error.response ? error.response.data : null, // Include any response data if available
-      });
-    }
-  }
-);
-
 export const getWhyUsPost = createAsyncThunk(
   "userReducer/whyUsPost",
   async () => {
@@ -78,6 +61,58 @@ export const getCarousel = createAsyncThunk(
   async () => {
     try {
       const data = await userService.getCarousel();
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getTeamMembers = createAsyncThunk(
+  "userReducer/getTeamMembers",
+  async () => {
+    try {
+      const data = await userService.getTeamMembers();
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getCustomers = createAsyncThunk(
+  "userReducer/getCustomer",
+  async () => {
+    try {
+      const data = await userService.getCustomer();
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getFieldPostDetail = createAsyncThunk(
+  "userReducer/getFieldPostDetail",
+  async (fieldId) => {
+    try {
+      const data = await userService.getFieldPostDetail(fieldId);
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getInformation = createAsyncThunk(
+  "userReducer/getInformation",
+  async (id) => {
+    try {
+      const data = await userService.getInformation(id);
 
       return data;
     } catch (error) {

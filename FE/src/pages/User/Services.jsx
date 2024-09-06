@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fieldListThunk, fieldPostThunk } from "../redux/userReducer/userThunk";
-import { BASE_URL_IMG } from "../services/urlConfig";
+import { fieldListThunk } from "../../redux/userReducer/userThunk";
+import { BASE_URL_IMG } from "../../services/urlConfig";
+import { useLocation } from "react-router-dom";
 
 const Services = () => {
   const [field, setField] = useState([]);
   const [service, setService] = useState([]);
+  const path = useLocation();
   const fieldList = useSelector((state) => state.userReducer.fieldList);
 
   const dispatch = useDispatch();
@@ -19,9 +21,19 @@ const Services = () => {
       setField(fieldList);
     }
   }, [fieldList]);
-  useEffect(() => {
-    dispatch(fieldPostThunk());
-  }, []);
+
+  const getGridTemplateColumns = () => {
+    if (location.pathname === "/") {
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-5";
+    }
+    if (field.length <= 2) {
+      return "grid-cols-1 sm:grid-cols-2";
+    } else if (field.length <= 4) {
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+    } else {
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5";
+    }
+  };
 
   return (
     <div
@@ -32,35 +44,31 @@ const Services = () => {
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          <div
-            key={0}
-            className="bg-[#021a51] p-4 shadow-lg rounded-lg flex flex-col"
-            style={{
-              boxShadow: "inset 15px 15px 20px 0px rgba(255, 255, 255, 0.25)",
-            }}
-          >
-            <div className="flex flex-col justify-between flex-grow mt-4 text-white">
-              <h3 className="text-lg font-semibold ">LĨNH VỰC CUNG CẤP</h3>
-              <div className="mt-2 text-sm ">
-                <ul className="list-disc pl-5">
-                  {field?.map((fieldItem, item) => {
-                    return (
-                      <li key={item} className="mb-2">
-                        {fieldItem.field_name}
-                      </li>
-                    );
-                  })}
-                </ul>
+        <div className={`grid ${getGridTemplateColumns()} gap-6`}>
+          {location.pathname === "/" && (
+            <div
+              key={0}
+              className="bg-[#021a51] p-4 shadow-lg rounded-lg flex flex-col"
+              style={{
+                boxShadow: "inset 15px 15px 20px 0px rgba(255, 255, 255, 0.25)",
+              }}
+            >
+              <div className="flex flex-col justify-between flex-grow mt-4 text-white">
+                <h3 className="text-lg font-semibold ">LĨNH VỰC CUNG CẤP</h3>
+                <div className="mt-2 text-sm ">
+                  <ul className="list-disc pl-5">
+                    {field?.map((fieldItem, item) => {
+                      return (
+                        <li key={item} className="mb-2">
+                          {fieldItem.field_name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
-              {/* Chỉ hiển thị "XEM THÊM" nếu có liên kết */}
-              {fieldList.hasMoreLink && (
-                <a href="#" className="mt-4 text-blue-600 hover:underline">
-                  XEM THÊM &gt;
-                </a>
-              )}
             </div>
-          </div>
+          )}
 
           {field?.map((fieldPost, item) => (
             <div
@@ -83,10 +91,10 @@ const Services = () => {
                   {fieldPost.fieldDesc}
                 </div>
                 {/* Chỉ hiển thị "XEM THÊM" nếu có liên kết */}
-                {/* {fieldPost.hasMoreLink && (
-
-               )} */}
-                <a href="#" className="mt-4 text-blue-600 hover:underline">
+                <a
+                  href={`/field-detail/${fieldPost.field_id}`}
+                  className="mt-4 text-blue-600 hover:underline"
+                >
                   XEM THÊM &gt;
                 </a>
               </div>

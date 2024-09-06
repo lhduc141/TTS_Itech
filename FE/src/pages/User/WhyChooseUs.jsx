@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getWhyUsPost } from "../redux/userReducer/userThunk";
+import { getWhyUsPost } from "../../redux/userReducer/userThunk";
 
 const WhyChooseUs = () => {
   const [whyUs, setWhyUs] = useState([]);

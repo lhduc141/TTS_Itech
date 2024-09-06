@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
-import image from "../images/carousel1.jpg";
-import image2 from "../images/carousel2.jpg";
+import image from "../../images/carousel1.jpg";
+import image2 from "../../images/carousel2.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getCarousel } from "../redux/userReducer/userThunk";
-import { BASE_URL_IMG } from "../services/urlConfig";
+import { getCarousel } from "../../redux/userReducer/userThunk";
+import { BASE_URL_IMG } from "../../services/urlConfig";
 
-const images = [image, image2, image, image2, image]; // Danh sách hình ảnh
+const images = [image, image2, image, image2]; // Danh sách hình ảnh
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

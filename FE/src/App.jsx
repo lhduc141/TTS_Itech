@@ -5,19 +5,23 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import "./css/style.css";
 
 // Import pages
-import Dashboard from "./pages/Dashboard";
-import Contact from "./pages/Contact";
-import AboutUsPage from "./pages/Aboutus";
+import Homepage from "./pages/User/Homepage";
+import Contact from "./pages/User/Contact";
+import AboutUsPage from "./pages/User/Aboutus";
 import Layout from "./components/layout/Layout";
-import Customers from "./pages/Customers";
-import Teams from "./pages/Teams";
-import MaintenanceService from "./pages/Maintaince";
-import ITSupportService from "./pages/SupportService";
-import EmailServices from "./pages/ProvideMail";
-import WebsiteVirtualServer from "./pages/WebVirtual";
+import Customers from "./pages/User/Customers";
+import Teams from "./pages/User/Teams";
+import MaintenanceService from "./pages/User/Maintaince";
+import ITSupportService from "./pages/User/SupportService";
+import EmailServices from "./pages/User/ProvideMail";
+import WebsiteVirtualServer from "./pages/User/WebVirtual";
+
+import Dashboard from "./pages/Admin/dashboard/Dashboard";
+import SignIn from "./pages/Admin/authentication/signin/SignIn";
+import FieldDetail from "./pages/User/FieldDetail";
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -34,7 +38,7 @@ function App() {
           path="/"
           element={
             <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
-              <Dashboard />
+              <Homepage />
             </Layout>
           }
         />
@@ -71,36 +75,55 @@ function App() {
           }
         />
         <Route
-         path="/Maintaince"
-         element={
-          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+          path="/Maintaince"
+          element={
+            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
               <MaintenanceService />
-          </Layout>
-         }
+            </Layout>
+          }
         />
         <Route
-         path="/SupportService"
-         element={
-          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+          path="/SupportService"
+          element={
+            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
               <ITSupportService />
-          </Layout>
-         }
+            </Layout>
+          }
         />
         <Route
-         path="/ProvideMail"
-         element={
-          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+          path="/ProvideMail"
+          element={
+            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
               <EmailServices />
-          </Layout>
-         }
+            </Layout>
+          }
         />
         <Route
-         path="/WebVirtual"
-         element={
-          <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+          path="/WebVirtual"
+          element={
+            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
               <WebsiteVirtualServer />
-          </Layout>
-         }
+            </Layout>
+          }
+        />
+        <Route
+          path="/field-detail/:fieldId"
+          element={
+            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+              <FieldDetail />
+            </Layout>
+          }
+        />
+
+        {/* Admin  */}
+        <Route path="/auth/sign-in" element={<SignIn />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
+              <Dashboard />
+            </Layout>
+          }
         />
         {/* Admin Page */}
       </Routes>

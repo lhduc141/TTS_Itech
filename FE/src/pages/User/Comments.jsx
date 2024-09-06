@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCommentList } from "../redux/userReducer/userThunk";
+import { getCommentList } from "../../redux/userReducer/userThunk";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);

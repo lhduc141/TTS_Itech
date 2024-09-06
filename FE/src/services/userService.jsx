@@ -21,8 +21,8 @@ export const userService = {
     return http.get(url);
   },
 
-  getFieldPost: (id) => {
-    let url = `user/fields-detail/`;
+  getFieldPostDetail: (id) => {
+    let url = `user/fields-detail/${id}`;
     return http.get(url);
   },
 
@@ -33,6 +33,16 @@ export const userService = {
 
   getTeamMembers: () => {
     let url = "/user/members";
+    return http.get(url);
+  },
+
+  getCustomer: () => {
+    let url = "/user/customer";
+    return http.get(url);
+  },
+
+  getInformation: (id) => {
+    let url = `/user/detail-information/${id}`;
     return http.get(url);
   },
 };
