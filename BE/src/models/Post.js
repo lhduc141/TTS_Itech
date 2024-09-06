@@ -24,7 +24,7 @@ export default class Post extends Model {
     },
     delete_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     admin_id: {
       type: DataTypes.INTEGER.UNSIGNED,

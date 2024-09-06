@@ -24,7 +24,7 @@ export default class Fields extends Model {
     },
     delete_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     admin_id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -41,6 +41,14 @@ export default class Fields extends Model {
         model: 'Language',
         key: 'lang_id'
       }
+    },
+    fieldDesc: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    fieldImage: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

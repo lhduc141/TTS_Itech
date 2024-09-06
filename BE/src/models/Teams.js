@@ -32,7 +32,7 @@ export default class Teams extends Model {
     },
     delete_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     admin_id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -49,6 +49,10 @@ export default class Teams extends Model {
         model: 'Language',
         key: 'lang_id'
       }
+    },
+    mem_desc: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

@@ -28,7 +28,7 @@ export default class PostDetail extends Model {
     },
     delete_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     post_id: {
       type: DataTypes.INTEGER.UNSIGNED,

@@ -55,16 +55,23 @@ export const getAllFieldPost = async (req, res) => {
 export const getFieldsDetail = async (req, res) => {
     try {
         let { field_id } = req.params;
+
         let data = await model.FieldPost.findOne({
             where: { field_id },
             attributes: [
                 ['fPost_id', 'fieldPostId'],
                 ['fPost_title', 'fieldPostTitle'],
                 ['fPost_content', 'fPostContent'],
-                ['create_at', 'createdAt'],
-                ['update_at', 'updatedAt']
+            ],
+            include: [
+                {
+                    model: model.Fields,
+                    as: 'field',  // Add 'as' to match the defined association
+                    attributes: ['field_id', 'field_name', 'fieldDesc', 'fieldImage'],
+                }
             ]
         });
+
 
         if (!data) {
             return responseData(res, "Fail", "No fields", 404); // Add return here
@@ -198,6 +205,7 @@ export const getDetailInformation = async (req, res) => {
                 ['cpn_id', 'id'],
                 ['cpn_name', 'name'],
                 ['cpn_sname', 'sname'],
+                'cpn_img',
                 'phone',
                 ['cpn_address', 'address'],
                 ['cpn_title', 'title'],
@@ -231,6 +239,7 @@ export const getMembers = async (req, res) => {
                 ['mem_img', 'img'],
                 ['mem_name', 'name'],
                 ['mem_pos', 'position'],
+                ['mem_desc', 'desc'],
                 ['create_at', 'createdAt'],
                 ['update_at', 'updatedAt']
             ],

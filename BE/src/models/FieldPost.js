@@ -28,7 +28,7 @@ export default class FieldPost extends Model {
     },
     delete_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     field_id: {
       type: DataTypes.INTEGER.UNSIGNED,
