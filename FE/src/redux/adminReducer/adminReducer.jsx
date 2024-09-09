@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loginThunk } from "./adminThunk";
+import { storage } from "../../services/storage";
 
 const initialState = {
-  token: "",
+  token: storage.getToken(),
 };
 
 const adminReducer = createSlice({
@@ -9,8 +11,15 @@ const adminReducer = createSlice({
   initialState,
   reducers: {
     logoutAction: (state) => {
-      state.token = "";
+      state.token = null;
+      storage.deleteToken();
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loginThunk.fulfilled, (state, action) => {
+      state.token = action.payload.token;
+      storage.setToken(action.payload.token);
+    });
   },
 });
 

@@ -43,6 +43,7 @@ export const userService = {
 
   getInformation: (id) => {
     let url = `/user/detail-information/${id}`;
+
     return http.get(url);
   },
 };

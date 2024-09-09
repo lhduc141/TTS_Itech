@@ -10,6 +10,7 @@ import {
   getTeamMembers,
   getWhyUsPost,
 } from "./userThunk";
+import { updateInfor } from "../adminReducer/adminThunk";
 
 const initialState = {
   fieldList: [],
@@ -54,8 +55,10 @@ const userReducer = createSlice({
         state.postDetail = action.payload.data.content;
       })
       .addCase(getInformation.fulfilled, (state, action) => {
-        console.log(action);
         state.information = action.payload.data.data;
+      })
+      .addCase(updateInfor.fulfilled, (state, action) => {
+        state.information = action.payload.data.content;
       });
   },
 });

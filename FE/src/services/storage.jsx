@@ -21,4 +21,34 @@ export const storage = {
       storage.setLangId(lang_id);
     }
   },
+
+  // Lưu token vào localStorage
+  setToken: (token) => {
+    let json = JSON.stringify(token);
+    localStorage.setItem("token", json);
+  },
+
+  // Lấy token từ localStorage
+  getToken: () => {
+    let json = localStorage.getItem("token");
+    if (json) {
+      return JSON.parse(json);
+    }
+    return null;
+  },
+
+  // Thay đổi token trong localStorage
+  changeToken: (token) => {
+    let currentToken = storage.getToken();
+    if (currentToken !== null) {
+      let newToken = JSON.stringify(token);
+      localStorage.setItem("token", newToken);
+    } else {
+      storage.setToken(token);
+    }
+  },
+
+  deleteToken: () => {
+    localStorage.removeItem("token");
+  },
 };
