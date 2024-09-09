@@ -4,6 +4,17 @@ import sequelize from "../config/database.js";
 import {checkToken, verifyToken} from "../config/jwt.js";
 let model = initModels(sequelize);
 
+// Utility function to delete old files
+const deleteOldFile = (filePath) => {
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath); // Delete the old file
+    }
+};
+
+// Utility function to handle image paths
+//UPDATE AVATA
+// FS: File System
+import fs from "fs";
 
 export const putDetailInformation = [
     verifyToken,
@@ -27,7 +38,7 @@ export const putDetailInformation = [
 
             // Update the company information
             const data = {
-                cpn_name, cpn_sname, cpn_address,
+                cpn_id, cpn_name, cpn_sname, cpn_address,
                 cpn_title, cpn_desc, cpn_copyright, cpn_content, update_at,
             };
 
@@ -40,37 +51,75 @@ export const putDetailInformation = [
     }
 ];
 
+import multer from "multer";
+import path from "path";
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/img'); // Path to save the file
+    },
+    filename: async function (req, file, cb) {
+        let { img_id } = req.params;
+
+        // Find the corresponding image record in the database to determine the new filename
+        const imageRecord = await model.Image.findOne({
+            where: { img_id }
+        });
+
+        if (!imageRecord) {
+            cb(new Error("Image record not found"), false);
+        } else {
+            // Use the img_id or another unique identifier to rename the file
+            const newFilename = `carousel_${img_id}${path.extname(file.originalname)}`; // For example: carousel_1.jpg
+            cb(null, newFilename); // Save the file with the new name
+        }
+    }
+});
+const upload = multer({ storage: storage });
+
 // Carousel
 export const putCarousel = [
     verifyToken,
+    upload.single("file"), // Middleware to handle single file upload
     async (req, res) => {
         try {
-            const { img_id } = req.params;
-            const {
-                img_name, img_content
-            } = req.body;
-            const update_at = new Date(); // Generate the timestamp in the proper format
-
-            // Find the company by cpn_id
-            const carousel = await model.Image.findOne({
-                where: { img_id, img_type: "carousel" },
-            });
-            const data = {
-                img_name, img_content, update_at,
-            };
-
-            if (!carousel) {
-                return responseData(res, "Fail", "Cannot find Information to change", 404);
-            }else {
-                await carousel.update(data);
-
+            let { file} = req;
+            if (!file) {
+                return res.status(400).send({ message: "No file provided" });
             }
 
-            return responseData(res, "Success", data, 200);
-        } catch (e) {
-            return responseData(res, "Error", e.message, 500);
+            let { img_id } = req.params;
+
+            // Find the Image record in the database
+            let data = await model.Image.findOne({
+                where: { img_id, img_type: "carousel" },
+            });
+
+            if (!data) {
+                return res.status(404).send({ message: "Image not found" });
+            }
+
+            // Get the old file path
+            const oldFilePath = path.join(process.cwd(), data.img_content);
+
+            // Delete the old image file if it exists
+            if (fs.existsSync(oldFilePath)) {
+                fs.unlinkSync(oldFilePath); // Delete the old file
+            }
+
+            // Construct the relative file path to be stored in the database
+            let newFilePath = `${file.filename}`; // Same as the old filename
+
+            // Update the img_content field with the new file path
+            data.img_content = newFilePath;
+            await data.save();
+
+            // Respond with success and the updated data
+            return responseData(res, "Success", { img_id, img_content: newFilePath }, 200);
+        } catch (error) {
+            return res.status(500).send({ message: error.message });
         }
-    }
+    },
 ]
 
 export const postCarousel = [
@@ -607,6 +656,22 @@ export const getAdminDetails = [
     async (req, res) => {
         try {
             let {id} = req.params;
+
+            let data = await model.Admin.findAll({
+
+            })
+
+            return responseData(res, "Success", data, 200);
+        } catch (e) {
+            return responseData(res, "Error ...", e.message, 500);
+        }
+    }
+]
+export const putPostDetail = [
+    verifyToken,
+    async (req, res) => {
+        try {
+            let {pDetail_id} = req.params;
 
             let data = await model.Admin.findAll({
 

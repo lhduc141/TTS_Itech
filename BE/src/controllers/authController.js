@@ -19,12 +19,15 @@ let Op = Sequelize.Op;
 export const login = async (req, res) => {
     try {
         let { username, password } = req.body;
+        const update_at = new Date();
 
         let getAdmin = await model.Admin.findOne({
             where: {
                 username,
             },
         });
+        console.log(getAdmin)
+
         if (getAdmin) {
             if (bcrypt.compare(password, getAdmin.password)) {
                 let key = new Date().getTime();

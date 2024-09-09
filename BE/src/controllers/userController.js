@@ -259,3 +259,29 @@ export const getMembers = async (req, res) => {
 export const getProjectsList = async (req, res) => {
 
 }
+
+export const getAllPost = async (req, res) => {
+    try {
+        let data = await model.PostDetail.findAll({
+            attributes: [
+                'pDetail_id', 'pDetail_title', 'pDetail_content',
+            ],
+            include: [
+                {
+                    model: model.Post,
+                    as: "post",
+                    attributes: ['post_id', 'post_type', "lang_id"]
+                }
+            ]
+        });
+
+        if (data.length === 0) {
+            return res.status(404).json({ message: "No posts found" });
+        }
+
+        res.status(200).json({ message: "Success", data });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ message: "An error occurred", error });
+    }
+}

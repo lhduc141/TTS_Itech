@@ -16,7 +16,7 @@ import {
     putFeedback,
     putFieldDetail,
     putFieldsList,
-    putMember, putProjects,
+    putMember, putPostDetail, putProjects,
     putWhy
 } from "../controllers/adminController.js";
 
@@ -55,5 +55,7 @@ adminRoutes.put("/customers/:customer_id", putCustomers);
 adminRoutes.post("/add-customers", postCustomers);
 
 adminRoutes.get("/detail/:id", getAdminDetails)
+
+adminRoutes.put("/post-change/:pDetail_id", putPostDetail);
 
 export default adminRoutes;

@@ -37,6 +37,7 @@ export const decodeToken = (token) => {
 // Verify Token ---------------------------------------------------
 export const verifyToken = (req, res, next) => {
     let token = req.headers['authorization'];
+    console.log("token: ", token)
 
     if (!token) {
         return responseData(res, "Fail", "No token provided", 401);

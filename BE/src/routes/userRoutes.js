@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    getAboutUs, getAllFieldPost,
+    getAboutUs, getAllFieldPost, getAllPost,
     getCarousel,
     getCustomer,
     getDetailInformation,
@@ -22,5 +22,7 @@ userRoutes.get("/feedback", getFeedback);
 userRoutes.get("/customer", getCustomer);
 userRoutes.get("/projects", getProjectsList);
 userRoutes.get("/detail-information/:cpn_id", getDetailInformation);
+userRoutes.get("/post", getAllPost);
+
 
 export default userRoutes;
