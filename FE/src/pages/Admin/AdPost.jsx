@@ -1,45 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCommentList } from "../../redux/userReducer/userThunk";
 import { message } from "antd";
-import { updateFeedback } from "../../redux/adminReducer/adminThunk";
+import { getAllPost, updatePost } from "../../redux/adminReducer/adminThunk";
 
-const FeedbackForm = () => {
-  const [feedback, setFeedback] = useState({
-    fb_id: "",
-    fb_writer: "",
-    fb_cpn: "",
-    fb_content: "",
+const AdPost = () => {
+  const [post, setPost] = useState({
+    pDetail_id: "",
+    pDetail_title: "",
+    pDetail_content: "",
+    post_type: "",
   });
 
-  const [comments, setComments] = useState([]);
+  const [postList, setPostList] = useState([]);
   const dispatch = useDispatch();
-  const cmtList = useSelector((state) => state.userReducer.comments);
+  const postArr = useSelector((state) => state.adminReducer.allPost);
 
   useEffect(() => {
-    dispatch(getCommentList());
+    dispatch(getAllPost());
   }, [dispatch]);
 
   useEffect(() => {
-    setComments(cmtList);
-  }, [cmtList]);
-
-  useEffect(() => {
-    if (cmtList && cmtList.length > 0) {
-      setComments(cmtList);
-      setFeedback({
-        fb_id: cmtList[0]?.id || "",
-        fb_writer: cmtList[0]?.writer || "",
-        fb_cpn: cmtList[0]?.company || "",
-        fb_content: cmtList[0]?.content || "",
-      });
-    }
-  }, [cmtList]);
+    setPostList(postArr);
+  }, [postArr]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFeedback((prevFeedback) => ({
-      ...prevFeedback,
+    setPost((prevPost) => ({
+      ...prevPost,
       [name]: value,
     }));
   };
@@ -54,13 +41,14 @@ const FeedbackForm = () => {
 
   const handleUpdateClick = () => {
     const data = {
-      fb_writer: feedback.fb_writer,
-      fb_cpn: feedback.fb_cpn,
-      fb_content: feedback.fb_content,
+      pDetail_title: post.pDetail_title,
+      pDetail_content: post.pDetail_content,
     };
-    dispatch(updateFeedback({ data: data, id: feedback.fb_id }))
+
+    // Assuming you dispatch the correct action to update the post
+    dispatch(updatePost({ data, pDetail_id: post.pDetail_id }))
       .then(() => {
-        message.success("update success");
+        message.success("Update success");
         setTimeout(() => {
           window.location.reload(); // Reset the page
         }, 1000);
@@ -70,37 +58,41 @@ const FeedbackForm = () => {
       });
   };
 
-  const handleEditClick = (comment) => {
-    setFeedback({
-      fb_id: comment.id,
-      fb_writer: comment.writer,
-      fb_cpn: comment.company,
-      fb_content: comment.content,
+  const handleEditClick = (postDetail) => {
+    setPost({
+      pDetail_id: postDetail.pDetail_id,
+      pDetail_title: postDetail.pDetail_title,
+      pDetail_content: postDetail.pDetail_content,
+      post_type: postDetail.post.post_type,
     });
   };
 
   return (
     <div className="flex-1 p-6 bg-gray-50">
       <div className="bg-white shadow rounded-lg p-6 space-y-6">
-        <h2 className="text-xl font-semibold">Feedback Form</h2>
+        <h2 className="text-xl font-semibold">Edit Post</h2>
 
-        {/* Grid layout for comments */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-4">
-          {comments?.map((cmt, index) => (
+          {postList?.map((postDetail, index) => (
             <div
               key={index}
               className="shadow-xl rounded-lg border-black p-4 flex justify-between"
             >
               <div className="w-[80%]">
-                <h2 className="font-bold">{cmt.writer}</h2>
-                <h3 className="text-[12px]">{cmt.company}</h3>
-                <p>{limitContentToWords(cmt.content)}</p>
+                <h2 className="font-bold">
+                  {postDetail.pDetail_title}{" "}
+                  <h3 className="font-medium">
+                    type: {postDetail.post.post_type}
+                  </h3>
+                </h2>
+
+                <p>{limitContentToWords(postDetail.pDetail_content)}</p>
               </div>
 
               <div className="flex items-center">
                 <button
                   className="btn bg-green-200"
-                  onClick={() => handleEditClick(cmt)} // Handle edit click
+                  onClick={() => handleEditClick(postDetail)} // Handle edit click
                 >
                   Edit
                 </button>
@@ -109,10 +101,10 @@ const FeedbackForm = () => {
           ))}
         </div>
 
-        {/* Feedback form */}
+        {/* Post form */}
         <div className="mt-8">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">Feedback Detail</h2>
+            <h2 className="text-xl font-semibold">Post Detail</h2>
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded"
               onClick={handleUpdateClick}
@@ -124,42 +116,42 @@ const FeedbackForm = () => {
 
         <form className="space-y-6">
           <div className="flex flex-col">
-            <label className="text-sm text-gray-700">Id Feedback</label>
+            <label className="text-sm text-gray-700">Post ID</label>
             <input
               type="text"
               className="p-2 border border-gray-300 rounded"
-              name="fb_id"
+              name="pDetail_id"
               readOnly
-              value={feedback.fb_id}
+              value={post.pDetail_id}
               onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-sm text-gray-700">Writter</label>
+            <label className="text-sm text-gray-700">Type</label>
+            <input
+              className="p-2 border border-gray-300 rounded"
+              name="post_type"
+              value={post.post_type}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-700">Post Title</label>
             <input
               type="text"
               className="p-2 border border-gray-300 rounded"
-              name="fb_writer"
-              value={feedback.fb_writer}
+              name="pDetail_title"
+              value={post.pDetail_title}
               onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-sm text-gray-700">Company</label>
-            <input
-              type="text"
-              className="p-2 border border-gray-300 rounded"
-              name="fb_cpn"
-              value={feedback.fb_cpn}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-sm text-gray-700">Detail</label>
+            <label className="text-sm text-gray-700">Content</label>
             <textarea
+              type="text"
               className="p-2 border border-gray-300 rounded h-32"
-              name="fb_content"
-              value={feedback.fb_content}
+              name="pDetail_content"
+              value={post.pDetail_content}
               onChange={handleInputChange}
             />
           </div>
@@ -169,4 +161,4 @@ const FeedbackForm = () => {
   );
 };
 
-export default FeedbackForm;
+export default AdPost;

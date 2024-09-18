@@ -59,10 +59,10 @@ const FieldDetail = () => {
           </div>
           <div>
             <h1 className="text-3xl text-center font-bold text-blue-400 mb-6">
-              DỊCH VỤ CNTT
+              {postDetail.field.field_name}
             </h1>
             <h2 className="text-2xl text-center font-semibold text-blue-400 mb-4">
-              Website - Virtual Server
+              {postDetail.fieldPostTitle}
             </h2>
           </div>
         </div>

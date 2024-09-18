@@ -18,7 +18,6 @@ export const getCarousel = async (req, res) => {
         responseData(res, "Error ...", "", 500);
     }
 }
-
 export const getFieldsList = async (req, res) => {
     try {
         let {lang_id} = req.headers;
@@ -38,20 +37,36 @@ export const getFieldsList = async (req, res) => {
 export const getAllFieldPost = async (req, res) => {
     try {
         let { lang_id } = req.headers;
+
+        // Fetch fields with associated FieldPost
         let data = await model.Fields.findAll({
             where: { lang_id },
             attributes: ['field_id', 'field_name', 'fieldDesc', 'fieldImage'],
-        })
-        if (!data) {
-            responseData(res, "Fail", "No fields", 404);
+            include: [
+                {
+                    model: model.FieldPost,
+                    as: "FieldPosts", // Ensure that this matches your association in the model
+                    attributes: [
+                        ['fPost_id', 'fieldPostId'],
+                        ['fPost_title', 'fieldPostTitle'],
+                        ['fPost_content', 'fPostContent'],
+                    ]
+                }
+            ]
+        });
+
+        // Check if data is empty instead of null
+        if (data.length === 0) {
+            return responseData(res, "Fail", "No fields found", 404);
         }
 
-        responseData(res, "Success", data, 200);
-    } catch {
-        responseData(res, "Error ...", "", 500);
+        // Return the found data
+        return responseData(res, "Success", data, 200);
+    } catch (error) {
+        // Include the error message for easier debugging
+        return responseData(res, "Error", error.message, 500);
     }
-}
-
+};
 export const getFieldsDetail = async (req, res) => {
     try {
         let { field_id } = req.params;
@@ -83,8 +98,6 @@ export const getFieldsDetail = async (req, res) => {
         return responseData(res, "Error ...", "", 500); // Add return here
     }
 }
-
-
 export const getAboutUs = async (req, res) => {
     try {
         let { lang_id } = req.headers;
@@ -117,7 +130,6 @@ export const getAboutUs = async (req, res) => {
         res.status(500).json({ message: "An error occurred", error });
     }
 }
-
 export const getWhyUs = async (req, res) => {
     try {
         let { lang_id } = req.headers;
@@ -150,7 +162,6 @@ export const getWhyUs = async (req, res) => {
         res.status(500).json({ message: "An error occurred", error });
     }
 }
-
 export const getFeedback = async (req, res) => {
     try {
         let { lang_id } = req.headers;
@@ -177,7 +188,6 @@ export const getFeedback = async (req, res) => {
         res.status(500).json({ message: "An error occurred", error });
     }
 }
-
 export  const getCustomer = async (req, res) => {
     try {
         let data = await model.Image.findAll({
@@ -193,7 +203,6 @@ export  const getCustomer = async (req, res) => {
         responseData(res, "Error ...", "", 500);
     }
 }
-
 export const getDetailInformation = async (req, res) => {
     try {
         let { lang_id } = req.headers;
@@ -227,7 +236,6 @@ export const getDetailInformation = async (req, res) => {
         res.status(500).json({ message: "An error occurred", error });
     }
 }
-
 export const getMembers = async (req, res) => {
     try {
         let { lang_id } = req.headers;
@@ -255,11 +263,9 @@ export const getMembers = async (req, res) => {
         res.status(500).json({ message: "An error occurred", error });
     }
 }
-
 export const getProjectsList = async (req, res) => {
 
 }
-
 export const getAllPost = async (req, res) => {
     try {
         let data = await model.PostDetail.findAll({

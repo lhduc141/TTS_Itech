@@ -53,6 +53,22 @@ export const updateCarouselImage = createAsyncThunk(
     }
   }
 );
+export const updateCustomerImage = createAsyncThunk(
+  "authReducer/updateCustomerImage",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const data = await adminService.updateCustomerImage(payload);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error.message,
+        code: error.code,
+        response: error.response ? error.response.data : null, // Include any response data if available
+      });
+    }
+  }
+);
 
 export const updateFeedback = createAsyncThunk(
   "authReducer/updateFeedback",
@@ -67,6 +83,73 @@ export const updateFeedback = createAsyncThunk(
         code: error.code,
         response: error.response ? error.response.data : null, // Include any response data if available
       });
+    }
+  }
+);
+
+export const getAllPost = createAsyncThunk(
+  "authReducer/getAllPost",
+  async () => {
+    try {
+      const data = await adminService.getAllPost();
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const updatePost = createAsyncThunk(
+  "authReducer/updatePost",
+  async (payload) => {
+    try {
+      const data = await adminService.updatePost(payload);
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const updateMember = createAsyncThunk(
+  "authReducer/updateMember",
+  async (payload) => {
+    try {
+      const data = await adminService.updateMember(payload);
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getFieldList = createAsyncThunk(
+  "authReducer/getFieldList",
+  async () => {
+    try {
+      const data = await adminService.getFieldList();
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const updateFieldPost = createAsyncThunk(
+  "authReducer/updateFieldPost",
+  async (payload) => {
+    try {
+      const data = await adminService.updateFieldPost(payload);
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   }
 );

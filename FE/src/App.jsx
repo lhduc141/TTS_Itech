@@ -11,10 +11,6 @@ import AboutUsPage from "./pages/User/Aboutus";
 import Layout from "./components/layout/Layout";
 import Customers from "./pages/User/Customers";
 import Teams from "./pages/User/Teams";
-// import MaintenanceService from "./pages/User/Maintaince";
-// import ITSupportService from "./pages/User/SupportService";
-// import EmailServices from "./pages/User/ProvideMail";
-// import WebsiteVirtualServer from "./pages/User/WebVirtual";
 
 import Dashboard from "./pages/Admin/Dashboard";
 import SignIn from "./pages/Admin/authentication/signin/SignIn";
@@ -23,9 +19,9 @@ import AdminLayout from "./components/layout/AdminLayout";
 import AdField from "./pages/Admin/AdField";
 import AdFeedback from "./pages/Admin/AdFeedback";
 import AdCarousel from "./pages/Admin/AdCarousel";
-import AdAboutUs from "./pages/Admin/AdAboutUs";
-import AdWhyUs from "./pages/Admin/AdWhyUs";
 import AdMember from "./pages/Admin/AdMember";
+import AdPost from "./pages/Admin/AdPost";
+import AdCustomer from "./pages/Admin/AdCustomer";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -81,38 +77,6 @@ function App() {
             </Layout>
           }
         />
-        {/* <Route
-          path="/Maintaince"
-          element={
-            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
-              <MaintenanceService />
-            </Layout>
-          }
-        />
-        <Route
-          path="/SupportService"
-          element={
-            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
-              <ITSupportService />
-            </Layout>
-          }
-        />
-        <Route
-          path="/ProvideMail"
-          element={
-            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
-              <EmailServices />
-            </Layout>
-          }
-        />
-        <Route
-          path="/WebVirtual"
-          element={
-            <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
-              <WebsiteVirtualServer />
-            </Layout>
-          }
-        /> */}
         <Route
           path="/field-detail/:fieldId"
           element={
@@ -128,8 +92,8 @@ function App() {
           <Route path="company-information" element={<Dashboard />} />
           <Route path="carousel" element={<AdCarousel />} />
           <Route path="feedback" element={<AdFeedback />} />
-          <Route path="why-choose-us" element={<AdWhyUs />} />
-          <Route path="about-us" element={<AdAboutUs />} />
+          <Route path="post" element={<AdPost />} />
+          <Route path="customer" element={<AdCustomer />} />
           <Route path="member" element={<AdMember />} />
           <Route path="field" element={<AdField />} />
         </Route>
